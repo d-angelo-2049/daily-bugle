@@ -103,9 +103,3 @@ daily-bugle/
 - [ ] Bluesky feed integration
 - [ ] Custom topic filters
 - [ ] Scheduled auto-fetch via cron
-
----
-
-## License
-
-MIT
