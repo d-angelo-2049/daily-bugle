@@ -10,8 +10,13 @@
 
 ## セクション構成
 
-1. **Tech & AI** — HN トップ、Reddit（r/MachineLearning、r/programming、r/startups、r/devops など）
-2. **Movies** — Reddit（r/movies、r/TrueFilm）、映画系RSS
+1. **AI & ML** — HN・r/MachineLearning・r/artificial・r/LocalLLaMA
+2. **Frontend** — r/javascript・r/reactjs・r/css・CSS-Tricks
+3. **Backend** — r/golang・r/rust・r/java・r/python・InfoQ
+4. **Cloud & CNCF** — r/kubernetes・r/aws・r/docker・CNCF Blog・The New Stack
+5. **OSS & Linux** — r/linux・r/opensource・GitHub Trending
+6. **Startups** — r/startups・r/technology・TechCrunch
+7. **Movies** — Reddit（r/movies・r/TrueFilm）、Roger Ebert・IndieWire
 
 ## 使い方
 
