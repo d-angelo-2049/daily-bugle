@@ -6,15 +6,40 @@ import requests
 HEADERS = {"User-Agent": "daily-bugle/1.0"}
 
 SUBREDDITS = {
-    "tech": [
+    "ai": [
         "MachineLearning",
         "artificial",
-        "programming",
-        "startups",
+        "LocalLLaMA",
+        "ChatGPT",
+    ],
+    "frontend": [
+        "javascript",
+        "reactjs",
+        "vuejs",
+        "css",
+        "webdev",
+    ],
+    "backend": [
+        "golang",
+        "rust",
+        "java",
+        "python",
+        "node",
+    ],
+    "cloud": [
         "devops",
         "aws",
         "kubernetes",
-        "webdev",
+        "docker",
+        "sre",
+    ],
+    "oss": [
+        "linux",
+        "opensource",
+        "programming",
+    ],
+    "startups": [
+        "startups",
         "technology",
     ],
     "movies": [
@@ -27,14 +52,14 @@ SUBREDDITS = {
 
 def fetch_subreddit(subreddit, limit=10):
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
-    resp = requests.get(url, headers=HEADERS)
+    resp = requests.get(url, headers=HEADERS, timeout=10)
     if resp.status_code != 200:
         print(f"Failed to fetch r/{subreddit}: {resp.status_code}")
         return []
     posts = []
     for post in resp.json()["data"]["children"]:
         d = post["data"]
-        if d.get("stickied") or d.get("is_self") and len(d.get("selftext", "")) < 100:
+        if d.get("stickied"):
             continue
         posts.append(
             {
@@ -51,7 +76,7 @@ def fetch_subreddit(subreddit, limit=10):
 
 
 def fetch():
-    result = {"tech": [], "movies": []}
+    result = {category: [] for category in SUBREDDITS}
     for category, subreddits in SUBREDDITS.items():
         for sub in subreddits:
             result[category].extend(fetch_subreddit(sub))
@@ -70,6 +95,5 @@ if __name__ == "__main__":
             ensure_ascii=False,
             indent=2,
         )
-    tech_count = len(data["tech"])
-    movie_count = len(data["movies"])
-    print(f"Fetched {tech_count} tech posts, {movie_count} movie posts from Reddit")
+    for cat, posts in data.items():
+        print(f"  {cat}: {len(posts)} posts")

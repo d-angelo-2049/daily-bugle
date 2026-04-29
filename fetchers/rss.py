@@ -4,11 +4,28 @@ from datetime import datetime
 import feedparser
 
 FEEDS = {
-    "tech": [
-        ("TechCrunch", "https://techcrunch.com/feed/"),
+    "ai": [
+        ("MIT Tech Review AI", "https://www.technologyreview.com/feed/"),
+        ("The Batch (DeepLearning.AI)", "https://www.deeplearning.ai/the-batch/feed/"),
+    ],
+    "frontend": [
+        ("CSS-Tricks", "https://css-tricks.com/feed/"),
+        ("Smashing Magazine", "https://www.smashingmagazine.com/feed/"),
+    ],
+    "backend": [
+        ("The Pragmatic Engineer", "https://newsletter.pragmaticengineer.com/feed"),
+        ("InfoQ", "https://feed.infoq.com/"),
+    ],
+    "cloud": [
+        ("The New Stack", "https://thenewstack.io/feed/"),
+        ("CNCF Blog", "https://www.cncf.io/feed/"),
+    ],
+    "oss": [
         ("The Verge", "https://www.theverge.com/rss/index.xml"),
         ("Wired", "https://www.wired.com/feed/rss"),
-        ("MIT Tech Review", "https://www.technologyreview.com/feed/"),
+    ],
+    "startups": [
+        ("TechCrunch", "https://techcrunch.com/feed/"),
     ],
     "movies": [
         ("Roger Ebert", "https://www.rogerebert.com/feed"),
@@ -33,7 +50,7 @@ def fetch_feed(name, url, limit=5):
 
 
 def fetch():
-    result = {"tech": [], "movies": []}
+    result = {category: [] for category in FEEDS}
     for category, feeds in FEEDS.items():
         for name, url in feeds:
             result[category].extend(fetch_feed(name, url))
@@ -52,4 +69,5 @@ if __name__ == "__main__":
             ensure_ascii=False,
             indent=2,
         )
-    print(f"Fetched {len(data['tech'])} tech, {len(data['movies'])} movie articles from RSS")
+    for cat, articles in data.items():
+        print(f"  {cat}: {len(articles)} articles")
