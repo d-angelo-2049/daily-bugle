@@ -2,7 +2,7 @@
 
 > Your personal morning paper — curated tech, AI, and movie news delivered as a beautiful HTML digest.
 
-![Static Badge](https://img.shields.io/badge/built_with-Claude_Code-blue) ![Static Badge](https://img.shields.io/badge/license-MIT-green)
+![Static Badge](https://img.shields.io/badge/built_with-Claude_Code-blue) 
 
 ---
 
