@@ -1,6 +1,7 @@
-import requests
 import json
 from datetime import datetime
+
+import requests
 
 HEADERS = {"User-Agent": "daily-bugle/1.0"}
 
@@ -23,6 +24,7 @@ SUBREDDITS = {
     ],
 }
 
+
 def fetch_subreddit(subreddit, limit=10):
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit={limit}"
     resp = requests.get(url, headers=HEADERS)
@@ -34,16 +36,19 @@ def fetch_subreddit(subreddit, limit=10):
         d = post["data"]
         if d.get("stickied") or d.get("is_self") and len(d.get("selftext", "")) < 100:
             continue
-        posts.append({
-            "title": d["title"],
-            "url": d.get("url"),
-            "score": d.get("score", 0),
-            "comments": d.get("num_comments", 0),
-            "subreddit": subreddit,
-            "source": f"r/{subreddit}",
-            "permalink": f"https://reddit.com{d['permalink']}",
-        })
+        posts.append(
+            {
+                "title": d["title"],
+                "url": d.get("url"),
+                "score": d.get("score", 0),
+                "comments": d.get("num_comments", 0),
+                "subreddit": subreddit,
+                "source": f"r/{subreddit}",
+                "permalink": f"https://reddit.com{d['permalink']}",
+            }
+        )
     return posts
+
 
 def fetch():
     result = {"tech": [], "movies": []}
@@ -52,12 +57,19 @@ def fetch():
             result[category].extend(fetch_subreddit(sub))
     return result
 
+
 if __name__ == "__main__":
     import os
+
     os.makedirs("data", exist_ok=True)
     data = fetch()
     with open("data/reddit.json", "w") as f:
-        json.dump({"fetched_at": datetime.now().isoformat(), "articles": data}, f, ensure_ascii=False, indent=2)
+        json.dump(
+            {"fetched_at": datetime.now().isoformat(), "articles": data},
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
     tech_count = len(data["tech"])
     movie_count = len(data["movies"])
     print(f"Fetched {tech_count} tech posts, {movie_count} movie posts from Reddit")
