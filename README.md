@@ -39,13 +39,13 @@ Cards with Japanese summaries, source badges, and scores — readable in under 5
 ### 1. Install dependencies
 
 ```bash
-pip3 install -r requirements.txt
+uv sync
 ```
 
 ### 2. Fetch today's news
 
 ```bash
-python3 run.py
+uv run run.py
 ```
 
 This pulls articles from all sources and saves raw JSON to `data/`.
@@ -82,7 +82,8 @@ daily-bugle/
 ├── data/                 # Raw fetched JSON (gitignored)
 ├── output/               # Generated HTML (gitignored)
 ├── run.py                # Fetch entrypoint
-├── requirements.txt
+├── pyproject.toml
+├── uv.lock
 └── CLAUDE.md
 ```
 
