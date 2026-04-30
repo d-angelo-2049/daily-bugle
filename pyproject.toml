@@ -1,3 +1,13 @@
+[project]
+name = "daily-bugle"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+    "requests",
+    "feedparser",
+    "beautifulsoup4",
+]
+
 [tool.ruff]
 target-version = "py39"
 line-length = 100
