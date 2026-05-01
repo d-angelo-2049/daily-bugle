@@ -59,4 +59,8 @@ with open("data/github_trending.json", "w") as f:
     )
 print(f"  -> {len(gh_data)} trending repos")
 
-print("\n=== Done! Run /digest in Claude Code to generate output/index.html ===")
+print("\n[5/5] Preprocessing (curating articles)...")
+import preprocess
+preprocess.main()
+
+print("\n=== Done! Run /digest in Claude Code to generate the digest ===")
