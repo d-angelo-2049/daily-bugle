@@ -6,7 +6,7 @@
 
 - **収集ソース**: Hacker News API、Reddit API、RSSフィード
 - **要約・キュレーション**: Claude Code 内で実行（外部APIコールなし）
-- **出力**: `output/index.html`（ブラウザで開くだけで読める）
+- **出力**: `output/YYYY-MM-DD.html`（当時の日付のついたファイル名で出力し、ブラウザで開くだけで読める）
 
 ## セクション構成
 
