@@ -4,6 +4,7 @@ Reads raw fetched data and outputs data/curated.json with
 top-ranked articles per section. Run between run.py and /digest
 to reduce the volume Claude needs to process.
 """
+
 import json
 import os
 import re
@@ -56,10 +57,7 @@ def load_json(path: str) -> dict:
 
 def filter_reddit(articles: list) -> list:
     """Drop image-only posts and below-threshold scores."""
-    return [
-        a for a in articles
-        if not is_image_post(a) and a.get("score", 0) >= MIN_REDDIT_SCORE
-    ]
+    return [a for a in articles if not is_image_post(a) and a.get("score", 0) >= MIN_REDDIT_SCORE]
 
 
 def curate_pool(pool: list) -> list:
@@ -93,8 +91,12 @@ def main() -> None:
     # Word-boundary patterns prevent "ai" matching "fail", "model" matching "models", etc.
     _ai_kw_exact = ("llm", "gpt", "claude", "openai", "deepseek", "mistral", "gemini", "anthropic")
     _ai_kw_word = ("ai", "ml", "model", "neural", "agent")
-    _ai_exact_re = re.compile(r"\b(?:" + "|".join(re.escape(k) for k in _ai_kw_exact) + r")\b", re.IGNORECASE)
-    _ai_word_re = re.compile(r"\b(?:" + "|".join(re.escape(k) for k in _ai_kw_word) + r")\b", re.IGNORECASE)
+    _ai_exact_re = re.compile(
+        r"\b(?:" + "|".join(re.escape(k) for k in _ai_kw_exact) + r")\b", re.IGNORECASE
+    )
+    _ai_word_re = re.compile(
+        r"\b(?:" + "|".join(re.escape(k) for k in _ai_kw_word) + r")\b", re.IGNORECASE
+    )
 
     def _is_ai_title(title: str) -> bool:
         return bool(_ai_exact_re.search(title) or _ai_word_re.search(title))
@@ -119,7 +121,9 @@ def main() -> None:
         sections[section] = curate_pool(pool)[: LIMITS[section]]
 
     # ── GitHub Trending ───────────────────────────────────────
-    sections["github_trending"] = sorted(gh_repos, key=score_repo, reverse=True)[: LIMITS["github_trending"]]
+    sections["github_trending"] = sorted(gh_repos, key=score_repo, reverse=True)[
+        : LIMITS["github_trending"]
+    ]
 
     curated = {
         "generated_at": datetime.now().isoformat(),
