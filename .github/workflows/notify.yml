@@ -1,0 +1,17 @@
+name: Notify
+
+on:
+  push:
+    branches: [main]
+    paths: ['output/*.html']
+
+jobs:
+  line-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send LINE notification
+        run: |
+          DATE=$(TZ='Asia/Tokyo' date +%Y-%m-%d)
+          curl -s -X POST https://notify-api.line.me/api/notify \
+            -H "Authorization: Bearer ${{ secrets.LINE_NOTIFY_TOKEN }}" \
+            -d "message=📰 今日の Daily Bugle が届きました！%0A${DATE}%0Ahttps://d-angelo-2049.github.io/daily-bugle/"
