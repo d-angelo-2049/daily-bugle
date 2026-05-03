@@ -1,0 +1,18 @@
+name: Notify
+
+on:
+  push:
+    branches: [main]
+    paths: ['output/*.html']
+
+jobs:
+  line-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send LINE notification
+        run: |
+          DATE=$(TZ='Asia/Tokyo' date +%Y-%m-%d)
+          curl -s -X POST https://api.line.me/v2/bot/message/push \
+            -H "Authorization: Bearer ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"to\": \"${{ secrets.LINE_USER_ID }}\", \"messages\": [{\"type\": \"text\", \"text\": \"📰 今日の Daily Bugle が届きました！\n${DATE}\nhttps://d-angelo-2049.github.io/daily-bugle/\"}]}"
