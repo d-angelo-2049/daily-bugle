@@ -1,3 +1,10 @@
+---
+name: digest
+description: Generate the Daily Bugle HTML digest from curated local data and template files. Use when asked to run /digest or create today's Daily Bugle news digest.
+metadata:
+  short-description: Generate Daily Bugle digest
+---
+
 以下の手順で今日のDaily Bugleダイジェストを生成してください。
 
 ## 手順
@@ -31,6 +38,7 @@
 |---|---|
 | `{{DATE_ISO}}` | `YYYY-MM-DD` 形式の今日の日付（例: `2026-04-30`） |
 | `{{DATE_JP}}` | 日本語形式の日付（例: `2026年4月30日（木）`） |
+| `{{GENERATOR}}` | 実行しているエージェント名とモデル名（例: `Claude Code (claude-sonnet-4-6)`、`Codex (GPT-5)`） |
 | `{{SECTION_AI}}` | AI & ML タブの中身HTML |
 | `{{SECTION_FRONTEND}}` | Frontend タブの中身HTML |
 | `{{SECTION_BACKEND}}` | Backend タブの中身HTML |
