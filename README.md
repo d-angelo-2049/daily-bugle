@@ -2,13 +2,13 @@
 
 > Your personal morning paper — curated tech, AI, and movie news delivered as a beautiful HTML digest.
 
-![Static Badge](https://img.shields.io/badge/built_with-Claude_Code-blue) 
+![Static Badge](https://img.shields.io/badge/built_with-Claude_Code_%2F_Codex-blue) 
 
 ---
 
 ## What is this?
 
-Daily Bugle is a self-hosted news digest generator. It collects articles from **Hacker News**, **Reddit**, and **RSS feeds**, then uses **Claude Code** to curate and summarize them into a clean, readable HTML page — your own daily newspaper.
+Daily Bugle is a self-hosted news digest generator. It collects articles from **Hacker News**, **Reddit**, **RSS feeds**, and **GitHub Trending**, then uses **Claude Code or Codex** to curate and summarize them into a clean, readable HTML page — your own daily newspaper.
 
 No subscriptions. No algorithms. Just the stories you actually want to read.
 
@@ -52,18 +52,18 @@ This pulls articles from all sources and saves raw JSON to `data/`.
 
 ### 3. Generate the digest
 
-Open this project in **Claude Code** and run:
+Open this project in **Claude Code or Codex** and run:
 
 ```
 /digest
 ```
 
-Claude reads the collected data, summarizes articles in Japanese, curates the best ones, and generates `output/index.html`.
+The agent reads the collected data, summarizes articles in Japanese, curates the best ones, and generates `output/YYYY-MM-DD.html`. The header records which agent generated the digest, using `{{GENERATOR}}` in `template.html`.
 
 ### 4. Open and read
 
 ```bash
-open output/index.html
+open output/YYYY-MM-DD.html
 ```
 
 ---
@@ -76,9 +76,10 @@ daily-bugle/
 │   ├── hackernews.py     # Hacker News API
 │   ├── reddit.py         # Reddit API (no auth required)
 │   └── rss.py            # RSS feeds via feedparser
-├── .claude/
-│   └── commands/
-│       └── digest.md     # /digest slash command for Claude Code
+├── .agents/
+│   └── skills/
+│       └── digest/
+│           └── SKILL.md  # Digest generation instructions for Claude Code/Codex
 ├── data/                 # Raw fetched JSON (gitignored)
 ├── output/               # Generated HTML (gitignored)
 ├── run.py                # Fetch entrypoint
@@ -92,8 +93,8 @@ daily-bugle/
 ## Design principles
 
 - **No paid APIs** — HN and Reddit have free public APIs; RSS is open
-- **No Claude API billing** — summarization runs inside a Claude Code session
-- **No server needed** — just open `index.html` in your browser
+- **No API billing** — summarization runs inside your Claude Code or Codex session
+- **No server needed** — just open the dated HTML file in your browser
 - **Privacy-first** — nothing is sent anywhere; everything stays local
 
 ---
