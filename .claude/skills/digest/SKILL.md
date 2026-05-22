@@ -1,1 +1,1 @@
-/Users/dohtsuka/Projects/daily-bugle/.agents/skills/digest/SKILL.md
+../../../.agents/skills/digest/SKILL.md
