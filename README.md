@@ -1,5 +1,5 @@
 # 📰 Daily Bugle
-
+Evaluated environment url: https://d-angelo-2049.github.io/daily-bugle/
 > Your personal morning paper — curated tech, AI, and movie news delivered as a beautiful HTML digest.
 
 ![Static Badge](https://img.shields.io/badge/built_with-Claude_Code_%2F_Codex-blue) 
