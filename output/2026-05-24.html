@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Bugle — 2026-05-24</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --tag-bg: #1f2937;
+      --feature-bg: #0e1825;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0e1825 0%, #161b22 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #58a6ff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header .meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Tabs */
+    .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Main layout */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* Section header */
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Feature cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .card-feature {
+      background: var(--feature-bg);
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-feature::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #58a6ff, #3fb950);
+    }
+    .card-feature .badge {
+      display: inline-block;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(88, 166, 255, 0.3);
+    }
+    .card-feature h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .card-feature h3 a { color: var(--text); }
+    .card-feature h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card-feature .summary {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .card-meta .source {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      background: var(--tag-bg);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .card-meta .score {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .card-meta .comments {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Grid cards */
+    .grid-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      margin-top: 8px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover {
+      border-color: #444c56;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .card h3 a { color: var(--text); }
+    .card h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card .summary {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    /* GitHub Trending special */
+    .trending-section { margin-bottom: 32px; }
+    .trending-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .trending-header h2 { font-size: 1rem; font-weight: 700; }
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .trending-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .trending-card:hover { border-color: #444c56; }
+    .trending-card .repo-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .trending-card .repo-desc {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .trending-card .repo-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .trending-card .lang { color: var(--accent2); font-weight: 600; }
+    .trending-card .stars-today { color: #f78166; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      main { padding: 20px 16px; }
+      .features { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      header { padding: 20px 16px 14px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Daily Bugle</h1>
+  <div class="meta">2026年5月24日（日）&nbsp;·&nbsp; 生成: Claude Code (claude-sonnet-4-6)</div>
+</header>
+
+<div class="tabs-wrapper">
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ai', this)">AI &amp; ML</button>
+    <button class="tab-btn" onclick="switchTab('frontend', this)">Frontend</button>
+    <button class="tab-btn" onclick="switchTab('backend', this)">Backend</button>
+    <button class="tab-btn" onclick="switchTab('cloud', this)">Cloud &amp; CNCF</button>
+    <button class="tab-btn" onclick="switchTab('oss', this)">OSS &amp; Linux</button>
+    <button class="tab-btn" onclick="switchTab('startups', this)">Startups</button>
+    <button class="tab-btn" onclick="switchTab('movies', this)">Movies</button>
+  </nav>
+</div>
+
+<main>
+
+<div id="tab-ai" class="tab-content active">
+<p class="section-desc">r/ChatGPT · r/LocalLLaMA · r/MachineLearning · r/artificial</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/ChatGPT · AI動画生成</span>
+    <h3><a href="https://v.redd.it/omitnwr3ww2h1" target="_blank">Grand Theft Auto: Every Era in Human History</a></h3>
+    <p class="summary">AIが生成したGTAスタイルの動画。石器時代から現代まで、人類の歴史をGTAの世界観で描いたバイラルコンテンツ。スコア1,754を獲得し、AI動画生成技術の進化を象徴する一作として話題を集めた。</p>
+    <div class="card-meta">
+      <span class="source">r/ChatGPT</span>
+      <span class="score">↑ 1,754</span>
+      <span class="comments">💬 71</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/artificial · 業界動向</span>
+    <h3><a href="https://www.motherjones.com/politics/2026/05/meta-video-ai-training-layoffs-video-exclusive-mci-bosworth-frenk/" target="_blank">退職するMetaの社員がAI批判動画を社内に投稿 — 大規模レイオフの中で</a></h3>
+    <p class="summary">Metaの大量解雇の中、退職する社員がAIトレーニングに対する痛烈な批判動画を社内に公開した。AIへのシフトで職を失った従業員たちの本音が垣間見える、業界の空気を象徴する出来事。</p>
+    <div class="card-meta">
+      <span class="source">r/artificial</span>
+      <span class="score">↑ 160</span>
+      <span class="comments">💬 47</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1tljrtk/gpt_55_secret_sauce_is_just_having_the_thinking/" target="_blank">GPT-5.5の「秘密のソース」は穴居人モードの思考プロセス?</a></h3>
+    <p class="summary">GPT-5.5の推論改善の核心が、意図的にシンプル化した「原始人モード」の内部思考プロセスに過ぎないのではという考察。LLM研究者の間で議論を呼んでいる。</p>
+    <div class="card-meta">
+      <span class="source">r/LocalLLaMA</span>
+      <span class="score">↑ 161</span>
+      <span class="comments">💬 110</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/gallery/1tlcars" target="_blank">AIへの過大な期待のピークはもう過ぎたのか?</a></h3>
+    <p class="summary">Gartnerのハイプ・サイクルを引用しながら、AI業界が「過剰期待のピーク」を超えて幻滅期に入りつつあるかを議論。現実と期待値のギャップについてコミュニティが考察。</p>
+    <div class="card-meta">
+      <span class="source">r/LocalLLaMA</span>
+      <span class="score">↑ 155</span>
+      <span class="comments">💬 104</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1tluma3/llamacpp_server_have_builtin_native_tools_exec/" target="_blank">llama.cpp サーバーにネイティブツールが内蔵 (exec_shell, edit_file など)</a></h3>
+    <p class="summary">llama.cppのサーバー版にシェル実行やファイル編集などのネイティブツールが組み込まれた。外部ツール連携なしにLLMがシステム操作を直接実行できるようになった。</p>
+    <div class="card-meta">
+      <span class="source">r/LocalLLaMA</span>
+      <span class="score">↑ 40</span>
+      <span class="comments">💬 10</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/MachineLearning/comments/1tkejqr/nuextract3_released_openweight_4b_vlm_for/" target="_blank">NuExtract3 リリース: OCR・構造化抽出対応のオープンウェイト4B VLM</a></h3>
+    <p class="summary">Markdown・OCR・構造化データ抽出に特化した4Bパラメータのビジョン言語モデル。セルフホスト可能で、ドキュメント解析ワークフローへの応用が期待される。</p>
+    <div class="card-meta">
+      <span class="source">r/MachineLearning</span>
+      <span class="score">↑ 35</span>
+      <span class="comments">💬 6</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1tlohld/nvfp4_mtp_voilà_on_llamacpp/" target="_blank">NVFP4 + MTP が llama.cpp に登場</a></h3>
+    <p class="summary">NVIDIAのFP4量子化とMulti-Token Predictionがllama.cppで動作確認。推論速度と精度のトレードオフを改善する新技術の組み合わせが注目されている。</p>
+    <div class="card-meta">
+      <span class="source">r/LocalLLaMA</span>
+      <span class="score">↑ 25</span>
+      <span class="comments">💬 22</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.theverge.com/ai-artificial-intelligence/936219/elon-stop-trying-to-make-grok-happen" target="_blank">Grokを普及させようとするイーロン・マスクの挑戦は苦戦中</a></h3>
+    <p class="summary">新データによると政府機関の職員はxAIのGrokを好まないことが判明。企業・政府向け展開の苦戦が続いており、ChatGPTやClaudeとの差は縮まっていない。</p>
+    <div class="card-meta">
+      <span class="source">r/artificial</span>
+      <span class="score">↑ 49</span>
+      <span class="comments">💬 33</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1tlnqzj/run_chromes_tiny_gemma4_aka_gemini_nano_directly/" target="_blank">ChromeのGemma4（Gemini Nano）をGPUなしでPC上で動かす</a></h3>
+    <p class="summary">ChromeブラウザにバンドルされているGemma4をGPUなしでローカル実行する方法が共有された。エッジAIの敷居が下がる一方、性能の限界も議論に。</p>
+    <div class="card-meta">
+      <span class="source">r/LocalLLaMA</span>
+      <span class="score">↑ 33</span>
+      <span class="comments">💬 25</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/artificial/comments/1tlpv9g/i_think_ai_training_is_way_more_accessible_than/" target="_blank">AIトレーニングは思ったよりずっとアクセスしやすい</a></h3>
+    <p class="summary">独自モデルの学習は巨大企業だけの特権ではないという主張。小規模なファインチューニングやLoRAを使えば個人でも取り組めるとして、具体的なアプローチが議論されている。</p>
+    <div class="card-meta">
+      <span class="source">r/artificial</span>
+      <span class="score">↑ 19</span>
+      <span class="comments">💬 52</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-frontend" class="tab-content">
+<p class="section-desc">r/webdev · r/javascript · r/reactjs · r/vuejs</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/webdev · ショーケース</span>
+    <h3><a href="https://www.reddit.com/gallery/1tlb3x4" target="_blank">SNS「Cyberspace」のためのレトロデスクトップ環境を作った</a></h3>
+    <p class="summary">独自のソーシャルネットワーク向けに構築された、まるでWindows 95風のレトロなデスクトップUI。ウィンドウ管理・アイコン・デスクトップ壁紙など、ブラウザ上で動作する完成度の高い再現が話題に。</p>
+    <div class="card-meta">
+      <span class="source">r/webdev</span>
+      <span class="score">↑ 145</span>
+      <span class="comments">💬 19</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/reactjs · ケーススタディ</span>
+    <h3><a href="https://www.reddit.com/r/reactjs/comments/1tlukjd/the_hardest_ui_ive_ever_built_in_react_a_visual/" target="_blank">Reactで作った最難関UI: リアルタイム実行状態付きビジュアルワークフローエディタ</a></h3>
+    <p class="summary">ノードベースのワークフローエディタをReactで実装した体験談。実行中のステートをリアルタイムで視覚化しながらドラッグ&amp;ドロップ操作も維持する難しさと工夫を詳しく解説している。</p>
+    <div class="card-meta">
+      <span class="source">r/reactjs</span>
+      <span class="score">↑ 9</span>
+      <span class="comments">💬 6</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/webdev/comments/1tlcob2/what_are_your_goto_websites_for_web_design/" target="_blank">Webデザインのインスピレーション源にするサイトは?</a></h3>
+    <p class="summary">コミュニティがおすすめするデザインギャラリー・参考サイトまとめ。Dribbble・Awwwards・Behanceに加えて意外な推薦も登場し、118点獲得の人気スレッド。</p>
+    <div class="card-meta">
+      <span class="source">r/webdev</span>
+      <span class="score">↑ 118</span>
+      <span class="comments">💬 25</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://fagnerbrack.com/technical-interviews-reject-the-wrong-engineers-a8e78ca04b2e" target="_blank">技術面接は間違ったエンジニアを落としている</a></h3>
+    <p class="summary">現行の技術面接（特にアルゴリズム問題）が優秀な実務家を不当に落とし、試験対策が得意なだけの候補者を通してしまうという問題提起。採用プロセスの見直しを訴える。</p>
+    <div class="card-meta">
+      <span class="source">r/webdev</span>
+      <span class="score">↑ 47</span>
+      <span class="comments">💬 10</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://github.com/kysely-org/kysely/releases/tag/v0.29.0" target="_blank">kysely 0.29 リリース</a></h3>
+    <p class="summary">TypeScript向け型安全なSQLクエリビルダーkyselyが0.29をリリース。パフォーマンス改善と新APIが追加された。</p>
+    <div class="card-meta">
+      <span class="source">r/javascript</span>
+      <span class="score">↑ 34</span>
+      <span class="comments">💬 8</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://v.redd.it/mtcijaty3t2h1" target="_blank">Vue + Lynxでモバイルアプリを作る</a></h3>
+    <p class="summary">VueでネイティブモバイルアプリをLynxフレームワークを使って構築するデモ動画。React Nativeの代替として注目されるLynxとVueの組み合わせ例。</p>
+    <div class="card-meta">
+      <span class="source">r/vuejs</span>
+      <span class="score">↑ 40</span>
+      <span class="comments">💬 8</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/reactjs/comments/1tlbi88/opensource_react_components_for_gamification/" target="_blank">ゲーミフィケーション UI のオープンソースReactコンポーネント集</a></h3>
+    <p class="summary">進捗バー・バッジ・リーダーボードなどゲーム要素をアプリに組み込むためのReactコンポーネントライブラリが公開。教育系・タスク管理アプリへの応用例も紹介。</p>
+    <div class="card-meta">
+      <span class="source">r/reactjs</span>
+      <span class="score">↑ 20</span>
+      <span class="comments">💬 16</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://docs.npmjs.com/staged-publishing/" target="_blank">npmのステージド公開: パッケージの段階的リリース</a></h3>
+    <p class="summary">npmの公式ドキュメントに「staged publishing」機能が追加。パッケージを一部ユーザーに先行公開してからフル公開する段階的リリース戦略を実現できる。</p>
+    <div class="card-meta">
+      <span class="source">r/javascript</span>
+      <span class="score">↑ 18</span>
+      <span class="comments">💬 3</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.jayfreestone.com/writing/you-might-not-need-the-repository-pattern/" target="_blank">リポジトリパターンは必要ない?</a></h3>
+    <p class="summary">リポジトリパターンが過剰な設計になるケースを解説。直接ORMやクエリビルダーを使う方がシンプルで保守しやすい場合が多いと主張する記事。</p>
+    <div class="card-meta">
+      <span class="source">r/javascript</span>
+      <span class="score">↑ 5</span>
+      <span class="comments">💬 2</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/gallery/1tlmmar" target="_blank">カーブアニメーションライブラリに描画モードと多様なエクスポートを追加</a></h3>
+    <p class="summary">自作のカーブアニメーションライブラリに、インタラクティブな描画モードとSVG/PNG/WebMなど複数フォーマットへのエクスポート機能を実装してOSS公開。</p>
+    <div class="card-meta">
+      <span class="source">r/webdev</span>
+      <span class="score">↑ 19</span>
+      <span class="comments">💬 1</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-backend" class="tab-content">
+<p class="section-desc">r/python · r/golang · r/rust · r/java · r/node</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/python · 業界動向</span>
+    <h3><a href="https://www.reddit.com/r/Python/comments/1tjonyf/is_uv_still_worth_learningswitching_to_now_that/" target="_blank">OpenAIに買収されたuv、まだ乗り換える価値はあるか?</a></h3>
+    <p class="summary">高速PythonパッケージマネージャーuvがOpenAIに買収されたことで、学習・移行に価値があるかを問うスレッドがスコア316・138コメントの大論争に発展。ツール自体の品質への評価は高いが、OpenAI傘下になったことへの懸念も根強い。</p>
+    <div class="card-meta">
+      <span class="source">r/python</span>
+      <span class="score">↑ 316</span>
+      <span class="comments">💬 138</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/golang · 公式ブログ</span>
+    <h3><a href="https://go.dev/blog/pkgsite-api" target="_blank">pkg.go.dev API の公式紹介</a></h3>
+    <p class="summary">Go公式がpkg.go.devのパブリックAPIをリリース。Goパッケージの検索・メタデータ取得・バージョン情報などをプログラムから参照できるようになった。エディタ拡張やツール開発への応用が期待される。</p>
+    <div class="card-meta">
+      <span class="source">r/golang</span>
+      <span class="score">↑ 128</span>
+      <span class="comments">💬 5</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/Python/comments/1thf9se/supplychain_attacks_are_happening_daily_add_at/" target="_blank">Pythonのサプライチェーン攻撃が急増 — 「依存関係クールダウン」を導入しよう</a></h3>
+    <p class="summary">PyPIへの悪意あるパッケージ投入が日常的になっている現状を警告。新バージョンを即座に採用せず一定期間待つ「依存関係クールダウン」戦略の導入を推奨。</p>
+    <div class="card-meta">
+      <span class="source">r/python</span>
+      <span class="score">↑ 160</span>
+      <span class="comments">💬 62</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://medium.com/lets-code-future/spring-boot-vs-node-js-i-ran-both-in-production-for-18-months-one-cost-12-000-more-guess-which-75dfa0afdad6?sk=ab59f6d2bb1bf3d1cf0b5ddf18733dd0" target="_blank">Spring Boot vs Node.js: 18ヶ月本番運用した実際のコスト比較</a></h3>
+    <p class="summary">同一ワークロードを18ヶ月並行稼働させた結果、一方が年間12,000ドル以上のコスト差になったという実体験レポート。スケーリング特性とインフラコストの違いを具体的数字で解説。</p>
+    <div class="card-meta">
+      <span class="source">r/java</span>
+      <span class="score">↑ 99</span>
+      <span class="comments">💬 37</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://devblogs.microsoft.com/dotnet/improving-csharp-memory-safety/" target="_blank">Rustに倣いC#のメモリ安全性を改善する</a></h3>
+    <p class="summary">MicrosoftがRustの所有権モデルからインスピレーションを得てC#のメモリ安全性を強化する取り組みを公式ブログで解説。SpanやRef Struct拡張など具体的な機能改善が明かされた。</p>
+    <div class="card-meta">
+      <span class="source">r/rust</span>
+      <span class="score">↑ 102</span>
+      <span class="comments">💬 21</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://openjdk.org/jeps/8357464" target="_blank">JEPドラフト: Javaのローカル変数宣言を強化 (プレビュー)</a></h3>
+    <p class="summary">Javaに新しい変数宣言構文を追加するJEPドラフトが公開。型推論の拡張や宣言の簡素化が目的で、開発者の利便性向上に向けたJavaの継続的進化の一環。</p>
+    <div class="card-meta">
+      <span class="source">r/java</span>
+      <span class="score">↑ 75</span>
+      <span class="comments">💬 43</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://github.com/kysely-org/kysely/releases/tag/v0.29.0" target="_blank">kysely 0.29 リリース (Node.js)</a></h3>
+    <p class="summary">型安全SQLクエリビルダーkyselyのv0.29がリリース。PGliteドライバー対応やクエリキャンセル機能、トランザクション改善など多数の機能追加と安定化。</p>
+    <div class="card-meta">
+      <span class="source">r/node</span>
+      <span class="score">↑ 83</span>
+      <span class="comments">💬 33</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://netbeans.apache.org/front/main/blogs/entry/announce-apache-netbeans-30-released/" target="_blank">Apache NetBeans 30 リリース</a></h3>
+    <p class="summary">Apache NetBeansがバージョン30に到達。Java 25対応・パフォーマンス改善・新しいリファクタリングツールなどが含まれ、老舗IDEが継続的に進化していることを示す。</p>
+    <div class="card-meta">
+      <span class="source">r/java</span>
+      <span class="score">↑ 50</span>
+      <span class="comments">💬 14</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.youtube.com/watch?v=U3E-sWo2H_M" target="_blank">Rust/Wasm製グラフィックエディタ Graphite — 2026年5月アップデート</a></h3>
+    <p class="summary">RustとWebAssemblyで構築されたノードベースのグラフィックエディタが大幅更新。ベクターブレンディング・グラデーション刷新・ドラッグ可能パネルなど500以上の変更を含む。</p>
+    <div class="card-meta">
+      <span class="source">r/rust</span>
+      <span class="score">↑ 46</span>
+      <span class="comments">💬 2</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/node/comments/1tiih2r/mikroorm_71_lazyref_perparent_collection_limiting/" target="_blank">MikroORM 7.1: LazyRef、PGliteドライバー、クエリキャンセルなど</a></h3>
+    <p class="summary">TypeScript向けORMのMikroORMがv7.1をリリース。遅延参照(LazyRef)・PGliteドライバー対応・データベーストリガー・ストアドプロシージャのサポートなど多機能追加。</p>
+    <div class="card-meta">
+      <span class="source">r/node</span>
+      <span class="score">↑ 44</span>
+      <span class="comments">💬 13</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-cloud" class="tab-content">
+<p class="section-desc">r/devops · r/kubernetes · r/aws · r/sre</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/devops · 気づき</span>
+    <h3><a href="https://www.reddit.com/r/devops/comments/1tlbyqj/everyone_in_my_company_is_discovering_that/" target="_blank">「エージェントワークフロー」は結局ただのCI/CDワークフローだと社内で気づき始めた</a></h3>
+    <p class="summary">AIエージェントワークフローの流行に乗った社内プロジェクトが、蓋を開けてみると従来のCI/CDパイプラインとほぼ同じ構造だったという体験談。スコア381・92コメントの共感を集め、AIエージェント技術の本質的な価値を問い直す議論に。</p>
+    <div class="card-meta">
+      <span class="source">r/devops</span>
+      <span class="score">↑ 381</span>
+      <span class="comments">💬 92</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/aws · 障害情報</span>
+    <h3><a href="https://www.reddit.com/r/aws/comments/1tkzipe/global_route53_api_outage/" target="_blank">AWS Route53 APIがグローバル障害</a></h3>
+    <p class="summary">AWSのRoute53 APIでグローバル規模の障害が発生。DNS管理操作に影響し、インフラ変更作業が一時停止を余儀なくされた。復旧状況と影響範囲についてコミュニティでリアルタイム情報共有が行われた。</p>
+    <div class="card-meta">
+      <span class="source">r/aws</span>
+      <span class="score">↑ 55</span>
+      <span class="comments">💬 14</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/kubernetes/comments/1tk4iqw/i_rebuilt_my_kubernetes_cluster_five_times_heres/" target="_blank">Kubernetesクラスターを5回作り直して学んだこと</a></h3>
+    <p class="summary">同一インフラを異なるアーキテクチャで5回構築し直した経験をもとに、各バージョンで得られた教訓を整理。ネットワーク設計・ストレージ選択・監視スタックの選定など実践的な知見が詰まっている。</p>
+    <div class="card-meta">
+      <span class="source">r/kubernetes</span>
+      <span class="score">↑ 51</span>
+      <span class="comments">💬 19</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="http://medium.com/@pavankumarn6997/migrating-from-aws-vpc-cni-kube-proxy-to-cilium-on-eks-f81bdcae8f89" target="_blank">EKSでAWS VPC CNI + Kube ProxyをCiliumに置き換え、Wireguardでpod間暗号化</a></h3>
+    <p class="summary">EKSのデフォルトCNIをCiliumに移行し、Wireguardを使ったpod間の暗号化を実現するまでの手順を詳解。セキュリティ強化とネットワーク可視性の向上を両立する構成。</p>
+    <div class="card-meta">
+      <span class="source">r/kubernetes</span>
+      <span class="score">↑ 53</span>
+      <span class="comments">💬 11</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/sre/comments/1tju8lr/how_complex_sre_systems_fail_18_lessons_for_the/" target="_blank">複雑なSREシステムの障害から学ぶ18の教訓</a></h3>
+    <p class="summary">複雑なシステムがどのように連鎖的に障害を起こすかを分析した記事。オンコールエンジニア向けに障害の兆候を早期察知するためのパターンと対処法を18ポイントでまとめている。</p>
+    <div class="card-meta">
+      <span class="source">r/sre</span>
+      <span class="score">↑ 54</span>
+      <span class="comments">💬 2</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/devops/comments/1tl8oej/i_dont_think_anyone_at_my_company_actually_knows/" target="_blank">社内で誰も個人情報の所在を把握していない</a></h3>
+    <p class="summary">PII（個人識別情報）がどのシステムに保存されているか把握できていない状況への懸念。コンプライアンスとデータガバナンスの難しさについてDevOpsコミュニティで率直な意見交換。</p>
+    <div class="card-meta">
+      <span class="source">r/devops</span>
+      <span class="score">↑ 57</span>
+      <span class="comments">💬 31</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://blog.prateekjain.dev/you-should-move-to-pnpm-from-npm-now-6e84b6cc7778?sk=fe3913487a067decbc069234e4e2ad1f" target="_blank">pnpm 11 はnpmの標準的な代替になれるか</a></h3>
+    <p class="summary">pnpm 11の新機能を検証し、npmからの移行を本格的に検討する価値があるかを考察。ディスク効率・インストール速度・ワークスペース対応の優位性が改めて注目されている。</p>
+    <div class="card-meta">
+      <span class="source">r/devops</span>
+      <span class="score">↑ 48</span>
+      <span class="comments">💬 13</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/kubernetes/comments/1tlpnsx/a_4_am_lesson_in_registry_coupling/" target="_blank">深夜4時に学んだレジストリ結合の教訓</a></h3>
+    <p class="summary">コンテナレジストリへの依存が原因で本番環境が未明に停止した障害体験記。単一レジストリへの強い結合がいかにリスクを生むかを実体験から解説。レジストリミラーリングの重要性が身にしみる話。</p>
+    <div class="card-meta">
+      <span class="source">r/kubernetes</span>
+      <span class="score">↑ 28</span>
+      <span class="comments">💬 24</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://rtfm.co.ua/en/opentelemetry-otel-collectors-in-kubernetes-and-victoriametrics-stack-integration/" target="_blank">OpenTelemetry: KubernetesのOTel CollectorとVictoriaMetricsの統合</a></h3>
+    <p class="summary">OTel CollectorをKubernetesにデプロイし、VictoriaMetricsスタックと統合するための実践ガイド。メトリクス収集パイプラインの構築をステップバイステップで解説。</p>
+    <div class="card-meta">
+      <span class="source">r/kubernetes</span>
+      <span class="score">↑ 19</span>
+      <span class="comments">💬 1</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/sre/comments/1tkem7h/i_am_so_tired_of_ai_ticket_summaries_who_is/" target="_blank">AIチケット要約にうんざり — 実際に問題を解決するAIはどこ?</a></h3>
+    <p class="summary">インシデント管理ツールへのAI統合が「要約」止まりで、根本原因分析や自動修復には至っていないという不満の声。本当に役立つAI SREツールをコミュニティが問い直している。</p>
+    <div class="card-meta">
+      <span class="source">r/sre</span>
+      <span class="score">↑ 19</span>
+      <span class="comments">💬 15</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-oss" class="tab-content">
+<p class="section-desc">Hacker News · r/linux · r/programming · r/opensource</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/linux · コミュニティ知識</span>
+    <h3><a href="https://www.reddit.com/r/linux/comments/1tls8n1/whats_the_most_unexpectedly_useful_linux_command/" target="_blank">遅すぎた出会い — 一番役に立ったLinuxコマンドは何?</a></h3>
+    <p class="summary">r/linuxで368点を獲得した人気スレッド。「なぜもっと早く知らなかったのか」という意外なLinuxコマンドをコミュニティが続々投稿。ss・pv・watch・reptyr・inotifywaitなど、知らないと損なコマンドが425のコメントで紹介されている。</p>
+    <div class="card-meta">
+      <span class="source">r/linux</span>
+      <span class="score">↑ 368</span>
+      <span class="comments">💬 425</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/programming · 深掘り</span>
+    <h3><a href="https://seriot.ch/computation/jira.html" target="_blank">JiraはチューリングCompleteである</a></h3>
+    <p class="summary">プロジェクト管理ツールJiraのワークフローエンジンを使って計算機を実装し、チューリング完全性を証明した技術記事。Jiraのルールシステムの意外な表現力を丁寧に解説しており、コンピュータサイエンスのユーモアとして話題に。</p>
+    <div class="card-meta">
+      <span class="source">r/programming</span>
+      <span class="score">↑ 217</span>
+      <span class="comments">💬 23</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.youtube.com/watch?v=U46fJ2bJ-co&amp;t=2780s" target="_blank">C++の創始者Bjarne Stroustrupがメモリ安全性を語る</a></h3>
+    <p class="summary">StroustrupがC++のメモリ安全性問題とRustへの対抗策について講演。C++26に向けたSafe C++提案やガイドラインの方向性を本人が解説する貴重なビデオ。</p>
+    <div class="card-meta">
+      <span class="source">r/programming</span>
+      <span class="score">↑ 256</span>
+      <span class="comments">💬 235</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://blog.fyralabs.com/celebrating-the-launch-of-foss-wiki/" target="_blank">FOSS Wiki 開設 — OSSとLinuxの百科事典</a></h3>
+    <p class="summary">オープンソースとLinuxに特化したオープンな百科事典「FOSS Wiki」が正式ローンチ。Wikipediaとは異なりFOSSコミュニティに根ざした情報を集積することを目指している。</p>
+    <div class="card-meta">
+      <span class="source">r/linux</span>
+      <span class="score">↑ 123</span>
+      <span class="comments">💬 29</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://jaysmito.dev/blog/blog/04-fast-lockfree-queues/" target="_blank">現代C++でロックフリーキューをゼロから実装する</a></h3>
+    <p class="summary">モダンC++でロックなしの高速キューをスクラッチから実装するチュートリアル。アトミック操作・メモリバリア・ABA問題など並行プログラミングの核心に踏み込んだ実践的な内容。</p>
+    <div class="card-meta">
+      <span class="source">r/programming</span>
+      <span class="score">↑ 112</span>
+      <span class="comments">💬 32</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/linux/comments/1tlwbjy/flatpak_20_seems_to_depend_on_systemd/" target="_blank">Flatpak 2.0 がsystemdに依存するようになった?</a></h3>
+    <p class="summary">Flatpak 2.0でsystemdへの依存が追加されたとの報告。systemdを使わないディストリビューション（Alpine・Void Linuxなど）のユーザーから懸念の声が上がりコミュニティで議論が加熱。</p>
+    <div class="card-meta">
+      <span class="source">r/linux</span>
+      <span class="score">↑ 41</span>
+      <span class="comments">💬 75</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://security.apple.com/blog/formal-verification-corecrypto/" target="_blank">Appleのcorecryptoを形式検証で証明する設計</a></h3>
+    <p class="summary">AppleがiOS/macOSのコア暗号ライブラリにFormal Verificationを適用するための設計思想を公開。数学的証明によりバグゼロを目指すアプローチの詳細が明かされた。</p>
+    <div class="card-meta">
+      <span class="source">r/programming</span>
+      <span class="score">↑ 72</span>
+      <span class="comments">💬 0</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://developer.chrome.com/blog/declarative-partial-updates" target="_blank">ChromeがDeclarative Partial Updates APIを提案</a></h3>
+    <p class="summary">ChromeチームがHTMLの部分的な宣言的更新APIを提案。JavaScriptなしでサーバーからの差分HTMLを適用できる仕組みで、HTMXやTurboの仕組みをネイティブ化する動き。</p>
+    <div class="card-meta">
+      <span class="source">r/programming</span>
+      <span class="score">↑ 64</span>
+      <span class="comments">💬 11</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://blogs.kde.org/2026/05/23/this-week-in-plasma-xe-driver-support-and-polishing-discover/" target="_blank">今週のPlasma: XeドライバーサポートとDiscoverの磨き込み</a></h3>
+    <p class="summary">KDE Plasmaの週次アップデート。IntelのXeグラフィックドライバーサポートの強化と、パッケージマネージャーUIのDiscoverの使い勝手改善が主な内容。</p>
+    <div class="card-meta">
+      <span class="source">r/linux</span>
+      <span class="score">↑ 66</span>
+      <span class="comments">💬 3</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://veronicaexplains.net/my-first-writerdeck/" target="_blank">私のライターデッキについて語る (HN)</a></h3>
+    <p class="summary">文章を書くことに特化したカスタムハードウェア「ライターデッキ」の製作と使用体験を語るブログ記事。HNで297点を獲得し、デジタルミニマリズムと集中環境づくりへの関心の高さを示した。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 297</span>
+      <span class="comments">💬 165</span>
+    </div>
+  </div>
+</div>
+
+<div class="trending-section">
+  <div class="trending-header"><h2>⭐ 今日のGitHub急上昇</h2></div>
+  <div class="trending-grid">
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank">multica-ai/andrej-karpathy-skills</a></div>
+      <div class="repo-desc">Andrej KarpathyのLLMコーディング観察から派生した、Claude Codeの動作を改善するための単一CLAUDE.mdファイル</div>
+      <div class="repo-meta">
+        <span class="lang">Unknown</span>
+        <span class="stars-today">★ 3,507 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/colbymchenry/codegraph" target="_blank">colbymchenry/codegraph</a></div>
+      <div class="repo-desc">Claude Code・Codex・Cursor向けの事前インデックス済みコード知識グラフ — トークン削減・ツール呼び出し削減・100%ローカル動作</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 2,456 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/Lum1104/Understand-Anything" target="_blank">Lum1104/Understand-Anything</a></div>
+      <div class="repo-desc">あらゆるコードを探索・検索・質問できるインタラクティブな知識グラフに変換。Claude Code・Codex・Cursor・Copilot・Gemini CLIに対応</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 2,299 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/anthropics/claude-plugins-official" target="_blank">anthropics/claude-plugins-official</a></div>
+      <div class="repo-desc">Anthropic公式管理による高品質なClaude Codeプラグインのディレクトリ</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 2,193 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank">rohitg00/ai-engineering-from-scratch</a></div>
+      <div class="repo-desc">学んで、作って、世に送り出す — AIエンジニアリングをゼロから学ぶリソース集</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 1,521 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/ruvnet/RuView" target="_blank">ruvnet/RuView</a></div>
+      <div class="repo-desc">市販のWiFi信号をリアルタイムの空間インテリジェンス・バイタルサイン監視・存在検知に変換するRust製ツール — 映像ゼロで実現</div>
+      <div class="repo-meta">
+        <span class="lang">Rust</span>
+        <span class="stars-today">★ 887 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/yt-dlp/yt-dlp" target="_blank">yt-dlp/yt-dlp</a></div>
+      <div class="repo-desc">多機能なコマンドライン音声・動画ダウンローダー</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 759 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/trimstray/the-book-of-secret-knowledge" target="_blank">trimstray/the-book-of-secret-knowledge</a></div>
+      <div class="repo-desc">インスピレーションを与えるリスト・マニュアル・チートシート・ブログ・ハック・ワンライナー・CLI/Webツールなどのコレクション</div>
+      <div class="repo-meta">
+        <span class="lang">Unknown</span>
+        <span class="stars-today">★ 628 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank">ChromeDevTools/chrome-devtools-mcp</a></div>
+      <div class="repo-desc">コーディングエージェント向けChrome DevTools</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 435 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/multica-ai/multica" target="_blank">multica-ai/multica</a></div>
+      <div class="repo-desc">オープンソースのマネージドエージェントプラットフォーム。コーディングエージェントを本物のチームメンバーに — タスク割り当て・進捗追跡・スキル蓄積</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 410 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/Fincept-Corporation/FinceptTerminal" target="_blank">Fincept-Corporation/FinceptTerminal</a></div>
+      <div class="repo-desc">高度な市場分析・投資リサーチ・経済データツールを提供するモダンな金融アプリケーション</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 545 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/odoo/odoo" target="_blank">odoo/odoo</a></div>
+      <div class="repo-desc">ビジネス成長のためのオープンソースアプリ群 — ERP・CRM・EC・会計などオールインワン</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 386 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills" target="_blank">mukul975/Anthropic-Cybersecurity-Skills</a></div>
+      <div class="repo-desc">AIエージェント向け754のサイバーセキュリティスキル。MITRE ATT&amp;CK・NIST CSF 2.0など5フレームワークにマッピングされ、Claude Code・Copilot・Cursorなどに対応</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 281 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/dotnet/skills" target="_blank">dotnet/skills</a></div>
+      <div class="repo-desc">AIコーディングエージェントの.NET・C#サポートを強化するスキルリポジトリ</div>
+      <div class="repo-meta">
+        <span class="lang">C#</span>
+        <span class="stars-today">★ 266 stars today</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-startups" class="tab-content">
+<p class="section-desc">r/technology · r/startups · TechCrunch</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/technology · AI経済</span>
+    <h3><a href="https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/" target="_blank">MicrosoftレポートがAIの本当のコスト問題を露呈: 人間の従業員より高い</a></h3>
+    <p class="summary">Microsoftの内部データによると、AIエージェントのトークンコストが積み重なり、一部業務では人間が行う方が安上がりだという実態が明らかに。スコア17,747・989コメントという驚異的な反響で、AI経済の現実に関する議論が爆発的に広がった。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 17,747</span>
+      <span class="comments">💬 989</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/technology · エネルギー問題</span>
+    <h3><a href="https://fortune.com/2026/05/19/data-centers-electricity-costs-us-public-opinion/" target="_blank">AIデータセンターが2030年までに一部州の電力コストを50%以上押し上げる恐れ</a></h3>
+    <p class="summary">AI需要に対応するデータセンターの急増で、2030年までにテキサス州やバージニア州などで電力料金が50%超上昇する予測が浮上。一般市民の「AIへの怒り」が加速しつつある現状を伝えるFortuneの報道。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 9,884</span>
+      <span class="comments">💬 650</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.govexec.com/management/2026/05/white-house-ordering-agencies-place-its-new-app-all-employees-government-phones/413738/" target="_blank">ホワイトハウスが政府職員の全スマートフォンに独自アプリのインストールを義務化</a></h3>
+    <p class="summary">トランプ政権がホワイトハウス製アプリを全連邦職員のスマートフォンに強制インストールするよう各機関に命令。プライバシーとセキュリティの観点から批判が相次いでいる。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 6,406</span>
+      <span class="comments">💬 515</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.techspot.com/news/112493-tech-layoffs-pass-100000-2026-tracker-points-ai.html" target="_blank">2026年のテックレイオフが10万人超 — AI投資のための人員削減が続く</a></h3>
+    <p class="summary">2026年に入ってから業界全体のレイオフ累計が10万人を超えたことが判明。AIへの投資拡大の裏側で、人間の従業員が削減されるという構造的な変化が統計として可視化された。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 2,194</span>
+      <span class="comments">💬 275</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.techspot.com/news/112504-canada-imposing-15-tax-global-streaming-services-support.html" target="_blank">カナダが海外ストリーミングサービスに15%課税 — 国内コンテンツ支援のため</a></h3>
+    <p class="summary">カナダ政府がNetflix・Disney+などの海外ストリーミング企業に対して15%の税を課すと発表。収益をカナダのローカルコンテンツ制作に還元する目的で、同様の動きが他国にも広がる可能性がある。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 1,396</span>
+      <span class="comments">💬 339</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.theverge.com/ai-artificial-intelligence/936219/elon-stop-trying-to-make-grok-happen" target="_blank">GrokをX以外に普及させることを諦めない — でも政府も企業も使わない</a></h3>
+    <p class="summary">Reutersの調査により、政府機関や企業顧客がxAIのGrokを積極採用していないことが明らかに。イーロン・マスクが強力に推進する一方で、ChatGPTやClaudeとの差は縮まっていない。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 1,359</span>
+      <span class="comments">💬 189</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.tomshardware.com/tech-industry/samsungs-bonus-dispute-spreads-to-chip-packaging-divisions-threatening-hbm-delivery-schedules" target="_blank">Samsungのボーナス格差（40万ドル vs 4,000ドル）が内部反乱に — HBM出荷に影響</a></h3>
+    <p class="summary">メモリ部門は40万ドルのボーナスを受け取ったのに、パッケージング部門は4,000ドルのみ。不満を持った従業員による意図的な生産スローダウンがHBM（高帯域幅メモリ）の出荷スケジュールを脅かしている。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 1,213</span>
+      <span class="comments">💬 49</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.thegamer.com/far-cry-7-generative-ai-rumour/" target="_blank">UbisoftがFar Cry 7にジェネレーティブAIをテスト中、見た目は「クソ」と内部情報</a></h3>
+    <p class="summary">Ubisoftが次作Far Cry 7でジェネレーティブAIコンテンツをテストしていると内部関係者が証言。品質は現時点で「見るに堪えない」レベルとされ、ゲーム業界でのAI活用の難しさが浮き彫りに。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 794</span>
+      <span class="comments">💬 65</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://arstechnica.com/ai/2026/05/ai-users-re-create-dead-pilots-voices-from-crash-investigation-docs/" target="_blank">AIで墜落事故の死亡パイロットの声を再現 — 米政府が規制に奔走</a></h3>
+    <p class="summary">航空事故調査書類を学習させたAIが亡くなったパイロットの声を再現できてしまうと判明。NTSBのコックピット音声開示禁止法を迂回するこの行為に対し、米国が対策を検討している。</p>
+    <div class="card-meta">
+      <span class="source">r/technology</span>
+      <span class="score">↑ 712</span>
+      <span class="comments">💬 49</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/startups/comments/1tli3bi/i_talked_to_350_ai_founders_in_the_past_few/" target="_blank">ここ数ヶ月で約350人のAIスタートアップ創業者と話してみた</a></h3>
+    <p class="summary">数百人のAI創業者と面談した体験から浮かび上がる共通パターンを赤裸々に語るスレッド。プロダクトの類似性・資金調達の現実・実際のユーザー獲得の難しさなど、AI創業ブームの実態が見えてくる。</p>
+    <div class="card-meta">
+      <span class="source">r/startups</span>
+      <span class="score">↑ 52</span>
+      <span class="comments">💬 52</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-movies" class="tab-content">
+<p class="section-desc">r/movies · r/TrueFilm · r/flicks</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">r/movies · 待望の新作</span>
+    <h3><a href="https://www.goldderby.com/film/2026/heat-2-michael-mann-leonardo-dicaprio-christian-bale-cast-date/" target="_blank">マイケル・マン監督『HEAT 2』が2026年9月〜2027年3月撮影開始へ</a></h3>
+    <p class="summary">伝説的犯罪映画『HEAT』(1995)の続編がついに製作開始へ。レオナルド・ディカプリオとクリスチャン・ベールを迎えてマイケル・マンが再びメガホンを取る。スコア2,311・329コメントという熱狂的な反響で、映画ファンが歓喜している。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 2,311</span>
+      <span class="comments">💬 329</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">r/movies · カンヌ速報</span>
+    <h3><a href="https://www.hollywoodreporter.com/movies/movie-news/netflix-cannes-film-deal-the-black-ball-penelope-cruz-1236604924/" target="_blank">Netflixがカンヌ出品作『The Black Ball』を買収 — 今年最長20分間のスタンディングオベーション</a></h3>
+    <p class="summary">ペネロペ・クルスとグレン・クロースが共演する『The Black Ball』が今年のカンヌで最長20分間のスタンディングオベーションを獲得。Netflixが北米配給権を複数スタジオとの競争の末に勝ち取った。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 983</span>
+      <span class="comments">💬 257</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://v.redd.it/gb6k1mu5ey2h1" target="_blank">ダック・スープ（1933）— 鏡のシーン（マルクス兄弟）</a></h3>
+    <p class="summary">グラウチョとハーポが鏡を使ったコメディ演技を披露する名シーン。90年以上前のギャグが985点を獲得し、時代を超えた笑いの普遍性を証明した。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 985</span>
+      <span class="comments">💬 53</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/movies/comments/1tlp5ia/ratatouille_2007_is_flawless/" target="_blank">ラタトゥイユ（2007）は完璧な映画だ</a></h3>
+    <p class="summary">ピクサーの名作をあらためて振り返り、その完成度を讃えるスレッド。脚本・キャラクター設計・音楽・テーマすべてが高いレベルで融合しているという論が900点超の支持を集めた。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 903</span>
+      <span class="comments">💬 221</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://variety.com/2026/film/news/cannes-film-festival-reveals-2026-award-winners-1236757655/" target="_blank">2026年カンヌ映画祭: クリスティアン・ムンジウ『Fjord』がパルムドール受賞</a></h3>
+    <p class="summary">2026年カンヌのパルムドールはルーマニアの巨匠クリスティアン・ムンジウ監督作『Fjord』が受賞。グランプリは『Minotaur』、最優秀女優賞はヴィルジニー・エフィラと田中奏。全受賞リストが公開された。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 265</span>
+      <span class="comments">💬 17</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://deadline.com/2026/05/florence-pugh-midnight-library-studios-in-talks-cannes-1236919776/" target="_blank">フローレンス・ピュー主演『The Midnight Library』がカンヌで争奪戦に</a></h3>
+    <p class="summary">マット・ヘイグのベストセラー小説を映画化した本作がカンヌ市場で複数スタジオによる争奪戦へ。フローレンス・ピューの演技が高く評価されており、本格公開への期待が高まっている。</p>
+    <div class="card-meta">
+      <span class="source">r/movies</span>
+      <span class="score">↑ 214</span>
+      <span class="comments">💬 44</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/flicks/comments/1tljxf6/what_separates_chevy_chase_from_bill_murray/" target="_blank">チェビー・チェイスとビル・マーレーの違いとは?</a></h3>
+    <p class="summary">同時代のコメディアンでSNLで活躍した二人をスターの持続性・演技の幅・キャラクターの深みで比較するスレッド。175コメントに及ぶ熱い議論が展開されている。</p>
+    <div class="card-meta">
+      <span class="source">r/flicks</span>
+      <span class="score">↑ 60</span>
+      <span class="comments">💬 175</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/TrueFilm/comments/1tjk9tf/ms_45_1981_is_a_film_i_am_apprehensive_about/" target="_blank">Ms .45（1981）— 勧めるのをためらうが注目すべき作品</a></h3>
+    <p class="summary">アベル・フェラーラ監督のカルト的な復讐映画を丁寧に論じるTrueFilmの投稿。過激な内容ゆえに人に薦めにくいが、フェミニストの観点から重要な主張を持つ作品として再評価されている。</p>
+    <div class="card-meta">
+      <span class="source">r/TrueFilm</span>
+      <span class="score">↑ 79</span>
+      <span class="comments">💬 32</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/flicks/comments/1tlu98c/is_there_a_better_working_character_actor_than/" target="_blank">スティーブン・ルートより優れた現役キャラクター俳優はいるか?</a></h3>
+    <p class="summary">『Office Space』『O Brother, Where Art Thou?』などで知られるスティーブン・ルートへの敬意を表すスレッド。どんな役柄にもなりきる稀有な俳優性について映画ファンが熱く語り合っている。</p>
+    <div class="card-meta">
+      <span class="source">r/flicks</span>
+      <span class="score">↑ 47</span>
+      <span class="comments">💬 41</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.reddit.com/r/flicks/comments/1tln1iu/what_are_times_you_felt_betrayed_by_a_movie/" target="_blank">映画の予告編に裏切られたと感じた瞬間は?</a></h3>
+    <p class="summary">予告編が全く別のジャンルや雰囲気を演出していて本編を観てがっかりした体験を共有するスレッド。137のコメントで映画ファンが苦い思い出を語り合っている。</p>
+    <div class="card-meta">
+      <span class="source">r/flicks</span>
+      <span class="score">↑ 11</span>
+      <span class="comments">💬 137</span>
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
