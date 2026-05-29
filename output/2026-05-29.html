@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Bugle — 2026-05-29</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --tag-bg: #1f2937;
+      --feature-bg: #0e1825;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0e1825 0%, #161b22 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #58a6ff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header .meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Tabs */
+    .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Main layout */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* Section header */
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Feature cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .card-feature {
+      background: var(--feature-bg);
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-feature::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #58a6ff, #3fb950);
+    }
+    .card-feature .badge {
+      display: inline-block;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(88, 166, 255, 0.3);
+    }
+    .card-feature h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .card-feature h3 a { color: var(--text); }
+    .card-feature h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card-feature .summary {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .card-meta .source {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      background: var(--tag-bg);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .card-meta .score {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .card-meta .comments {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Grid cards */
+    .grid-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      margin-top: 8px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover {
+      border-color: #444c56;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .card h3 a { color: var(--text); }
+    .card h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card .summary {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    /* GitHub Trending special */
+    .trending-section { margin-bottom: 32px; }
+    .trending-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .trending-header h2 { font-size: 1rem; font-weight: 700; }
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .trending-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .trending-card:hover { border-color: #444c56; }
+    .trending-card .repo-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .trending-card .repo-desc {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .trending-card .repo-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .trending-card .lang { color: var(--accent2); font-weight: 600; }
+    .trending-card .stars-today { color: #f78166; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      main { padding: 20px 16px; }
+      .features { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      header { padding: 20px 16px 14px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Daily Bugle</h1>
+  <div class="meta">2026年5月29日（金）&nbsp;·&nbsp; 生成: Claude Code (claude-sonnet-4-6)</div>
+</header>
+
+<div class="tabs-wrapper">
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ai', this)">AI &amp; ML</button>
+    <button class="tab-btn" onclick="switchTab('frontend', this)">Frontend</button>
+    <button class="tab-btn" onclick="switchTab('backend', this)">Backend</button>
+    <button class="tab-btn" onclick="switchTab('cloud', this)">Cloud &amp; CNCF</button>
+    <button class="tab-btn" onclick="switchTab('oss', this)">OSS &amp; Linux</button>
+    <button class="tab-btn" onclick="switchTab('startups', this)">Startups</button>
+    <button class="tab-btn" onclick="switchTab('movies', this)">Movies</button>
+  </nav>
+</div>
+
+<main>
+
+<div id="tab-ai" class="tab-content active">
+<p class="section-desc">Hacker News · r/MachineLearning · r/artificial · r/LocalLLaMA · MIT Tech Review AI</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Hacker News · 新モデル</span>
+    <h3><a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank">Claude Opus 4.8</a></h3>
+    <p class="summary">AnthropicがClaude Opus 4.8をリリース。エフォートコントロール、ダイナミックワークフロー、より安価なFastモード、誠実性の向上と欺瞞の低減が特徴。HNでスコア1611を記録し、今日最も話題のAIニュース。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 1611</span>
+      <span class="comments">💬 1256</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">Hacker News · ゲーム</span>
+    <h3><a href="https://llmgame.scalex.dev" target="_blank">Show HN: Continue? Y/N — AIエージェントの許可疲れを体験する60秒ゲーム</a></h3>
+    <p class="summary">AIエージェントが次々と許可を求めてくる「許可疲れ」をテーマにした60秒のブラウザゲーム。ユーモラスながらも、現代のAIエージェント設計の課題を鋭く突いており、コメント欄も盛り上がっている。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 345</span>
+      <span class="comments">💬 137</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://buildingbetter.tech/p/i-read-the-claude-code-source-code" target="_blank">Claude Code — ドキュメントに載っていない設定のすべて</a></h3>
+    <p class="summary">Claude Codeのソースコードを読み込んで発見した、公式ドキュメントには記載されていない設定・カスタマイズ方法をまとめた記事。上級ユーザー必読。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 185</span>
+      <span class="comments">💬 33</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://mastrojs.github.io/blog/2026-05-23-is-AI-causing-a-repeat-of-frontends-lost-decade/" target="_blank">AIはフロントエンドの「失われた10年」を繰り返すのか？</a></h3>
+    <p class="summary">AIが生成するコードが低品質なフロントエンドを大量生産し、かつてのjQueryスパゲッティ時代を再来させるのではないかという考察。開発者の判断力の重要性を問う。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 88</span>
+      <span class="comments">💬 70</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/" target="_blank">標準GPUでリアルタイムLLM推論：1リクエスト3000トークン/秒を実現</a></h3>
+    <p class="summary">特殊ハードウェアなしで、標準的なGPU上で1リクエストあたり3000トークン/秒の推論速度を達成する手法を解説。LLMの実用デプロイに大きな影響を与えうる技術。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 58</span>
+      <span class="comments">💬 35</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://firethering.com/hell-grind-ai-film-cannes-premiere-higgsfield/" target="_blank">「カンヌでプレミア上映」の50万ドルAI映画、実は公式セレクションではなかった</a></h3>
+    <p class="summary">50万ドルをかけて制作されたAI映画が「カンヌでプレミア上映」と宣伝されていたが、公式フェスティバルのセレクションには選ばれていなかったことが判明。AI映画のマーケティング誇張への懸念が広がる。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 48</span>
+      <span class="comments">💬 58</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://blog.cloudflare.com/ai-code-review/" target="_blank">Cloudflareのスケールで実現するAIコードレビューの自動化</a></h3>
+    <p class="summary">CloudflareがどのようにAIを活用して大規模なコードレビューを自動化しているかを解説。AIによるレビュー精度と人間との協働モデルについて詳述している。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 41</span>
+      <span class="comments">💬 16</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.technologyreview.com/2026/05/29/1138107/how-the-popes-magnifica-humanitas-offers-a-template-for-individuals-to-meet-the-ai-moment/" target="_blank">教皇のAI回勅「Magnifica Humanitas」——個人がAI時代に立ち向かうための指針</a></h3>
+    <p class="summary">教皇レオ14世がAIに関する回勅を発表し「技術は決して中立ではない」と宣言。テクノロジストと政策立案者に対して、勇気と連帯をもってAI時代に臨むよう呼びかけている。</p>
+    <div class="card-meta">
+      <span class="source">MIT Tech Review AI</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://vickiboykis.com/2026/05/28/we-should-be-more-tired-than-the-model/" target="_blank">モデルより先に疲れるべきは私たちのはず</a></h3>
+    <p class="summary">AI研究者Vicki BoykisによるAI時代の働き方への省察。モデルが無限に動き続ける中、人間の注意力と休息の価値を再考する短いエッセイ。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 11</span>
+      <span class="comments">💬 1</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.technologyreview.com/2026/05/28/1138096/lithium-extraction-rock-zero/" target="_blank">新技術でリチウム採掘を革新——EVバッテリーのコストと環境負荷を削減へ</a></h3>
+    <p class="summary">岩石からのリチウム抽出に新手法が登場。従来より低コスト・低排出で採掘できるとされ、EV普及とエネルギー貯蔵の加速に貢献する可能性がある。Science誌に掲載。</p>
+    <div class="card-meta">
+      <span class="source">MIT Tech Review AI</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-frontend" class="tab-content">
+<p class="section-desc">r/javascript · r/reactjs · r/css · CSS-Tricks · Smashing Magazine</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Smashing Magazine · CSS</span>
+    <h3><a href="https://smashingmagazine.com/2026/05/mathematical-layouts-sibling-index-sibling-count/" target="_blank">Advanced Tree Counting: `sibling-index()` と `sibling-count()` で実現する数学的レイアウト</a></h3>
+    <p class="summary">CSSの新関数 `sibling-index()` と `sibling-count()` を使えば、`:nth-child()` やJavaScriptを一切使わず1行でスタッガード・カスケードアニメーションを実現できる。5要素でも5000要素でも同じコードで動作する革新的な手法。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">Smashing Magazine · アクセシビリティ</span>
+    <h3><a href="https://smashingmagazine.com/2026/05/building-self-correcting-color-systems-contrast-color/" target="_blank">アルゴリズムテーマエンジン：`contrast-color()` で自己修正するカラーシステムを構築する</a></h3>
+    <p class="summary">2025年時点でもWebサイトの70%がWCAGのコントラスト基準を満たしていない。新しいCSS関数 `contrast-color()` を活用し、アクセシブルなカラーシステムを自動で維持する手法を解説。JSライブラリ不要。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://css-tricks.com/the-state-of-css-centering-in-2026/" target="_blank">2026年版CSSセンタリングの現状</a></h3>
+    <p class="summary">Flexbox、Grid、アンカー配置など現代のセンタリング手法を網羅的に整理。「なぜそのコードが動くのか」を理解するための解説として充実した内容。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://css-tricks.com/cross-document-view-transitions-part-2/" target="_blank">クロスドキュメントView Transitions：数百要素へのスケーリング</a></h3>
+    <p class="summary">ページ間のView Transitionsで `view-transition-name` を大量管理する際のCSSセレクタ爆発を回避するテクニックを解説する実践的パート2。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://css-tricks.com/revealing-text-with-css-letter-spacing/" target="_blank">CSS `letter-spacing` でテキストを明かす表現テクニック</a></h3>
+    <p class="summary">`::nth-letter` がまだない現状で、`letter-spacing` や `::first-line` 等の既存CSSを活用してクールなテキストエフェクトを実現する方法を紹介。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://css-tricks.com/stack-overflow-when-we-stop-asking/" target="_blank">Stack Overflow：質問しなくなったとき何が起きるか</a></h3>
+    <p class="summary">Stack Overflowへの質問数が急減している現状を受け、AI時代に「質問する」という学習行動がどう変容しつつあるかを考察する。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://css-tricks.com/technical-writing-in-the-ai-age/" target="_blank">AI時代のテクニカルライティング</a></h3>
+    <p class="summary">AIが文章を生成できる時代に、人間のテクニカルライターが持つ価値と差別化について考察。AIツールとの共存のヒントも提示している。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://smashingmagazine.com/2026/05/prototype-users-fix-protopie/" target="_blank">プロトタイプはユーザーに正直ではない——そしてその修正方法</a></h3>
+    <p class="summary">ユーザビリティテストで参加者がすぐに「本物ではない」と気づいてしまうプロトタイプの問題点と、より現実に近い体験を提供するための具体的な改善策を解説。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://smashingmagazine.com/2026/05/data-backed-truths-user-experience-roi/" target="_blank">UX ROIの10のデータに裏付けられた真実</a></h3>
+    <p class="summary">UX改善が売上・リテンション・長期成長に直接影響することをデータで示す10の事実。経営層への説得材料として使えるエビデンス集。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://smashingmagazine.com/2026/05/four-levels-customer-understanding/" target="_blank">顧客理解の4つのレベル</a></h3>
+    <p class="summary">ユーザーが言うこと・感じること・考えること・行動することは往々にして異なる。表面的な観察を超えて本質的な動機を探るUXリサーチのフレームワーク。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-backend" class="tab-content">
+<p class="section-desc">r/golang · r/rust · r/java · r/python · InfoQ · The Pragmatic Engineer</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Pragmatic Engineer · キャリア</span>
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/state-of-the-job-market-2026" target="_blank">2026年ソフトウェアエンジニア転職市場の現状</a></h3>
+    <p class="summary">独自データによるテック採用市場の深堀り分析。AIエンジニアリングブームの実態、AI採用がSWEの採用を「代替」しているのかどうか、求人数の推移まで網羅した必読レポート。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">Pragmatic Engineer · Rust</span>
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/why-rust-is-different-with-alice" target="_blank">Rustが他と違う理由——Alice Ryhlとの対話</a></h3>
+    <p class="summary">GoogleのAndroid Rustチームに所属するAlice RyhlがRustの魅力と他言語との本質的な違いを語る。信頼性の高いソフトウェアを構築するうえでRustが強力な理由を深く掘り下げる。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/opencode" target="_blank">Dax RaadとOpenCodeを作った話</a></h3>
+    <p class="summary">OpenCodeの共同創業者Dax RaadがAIコーディングツールの限界と急成長の背景、エンジニアの判断力がまだ重要な理由を語るインタビュー。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-a-trend-of-trying-to-cut" target="_blank">エンジニアリング部門でAI費用を削減しようとするトレンド</a></h3>
+    <p class="summary">Cursorの興味深いAIコーディング統計や、GCPが月200万ドルの顧客を警告なしに停止した事例、AIトークンコスト合理化の動きをまとめたニュース。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.infoq.com/news/2026/05/github-agentic-token-savings/" target="_blank">GitHubがエージェントCIのトークン消費を最大62%削減</a></h3>
+    <p class="summary">未使用MCPツールの削除、一部MCPコールのgh CLIへの置き換え、日次「監査エージェント」の導入によりGitHubがエージェントワークフローのコストを大幅削減した実績報告。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.infoq.com/news/2026/05/ai-nginx-higress/" target="_blank">AI支援マイグレーションツールでingress-nginxからHigress移行を30分で完了</a></h3>
+    <p class="summary">CNCFが紹介する新しいAI支援アプローチにより、60のingress-nginxリソースをHigressへ約30分で移行。手動設定と比較して大幅な時間短縮を実現した。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.infoq.com/presentations/eval-ai-adoption/" target="_blank">本番AIシステムの評価債務——原則から実践へ</a></h3>
+    <p class="summary">Twitter・Walmart・Netflixでの経験を持つMallika Raoが、本番AIシステムの隠れたリスク「評価債務」と従来指標が現代AIに通用しない理由を解説する。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.infoq.com/news/2026/05/accountability-AI-EU-regulations/" target="_blank">EU規制が促すAIの説明責任とトランスペアレンシー</a></h3>
+    <p class="summary">AIのバイアスは人間のバイアスを反映する。EU AI規制がアカウンタビリティをどのように強化しようとしているか、倫理とAIの不可分な関係を考察する。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-antigravity-20-takes-ide" target="_blank">GoogleのAI IDE「Antigravity 2.0」が不評——混沌とした製品エコシステムの背景</a></h3>
+    <p class="summary">GoogleがリニューアルしたAI IDEへの否定的なフィードバックと、MetaがAI投資を続けながら10%のレイオフを敢行した背景をまとめたニュース。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.infoq.com/presentations/framework-best-practices-startup/" target="_blank">創業エンジニアからCTO、そしてCEOへ——同じスタートアップで</a></h3>
+    <p class="summary">Trisha BallakurがバックエンドエンジニアからCTO・CEOへと転身した経験をスタートアップPointzを事例に解説。ボトムアップカスタマーリサーチの実装方法も紹介。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-cloud" class="tab-content">
+<p class="section-desc">r/kubernetes · r/aws · r/docker · r/devops · The New Stack · CNCF Blog</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">CNCF Blog · Kubernetes</span>
+    <h3><a href="https://www.cncf.io/blog/2026/05/27/gpu-autoscaling-on-kubernetes-with-keda-building-an-external-scaler/" target="_blank">KubernetesでGPUワークロードをKEDAでオートスケール——外部スケーラーの構築</a></h3>
+    <p class="summary">vLLM・Triton・学習ジョブなどGPUワークロードのKubernetesオートスケールはCPU/メモリ基準が機能しない問題を、KEDAの外部スケーラーで解決するアプローチを詳解。AIインフラの実運用に直結する内容。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">The New Stack · セキュリティ</span>
+    <h3><a href="https://thenewstack.io/snyk-pentesting-ai-agents-security/" target="_blank">AIがセキュリティの構築スピードを超えてコードを出荷している</a></h3>
+    <p class="summary">SnykがAIエージェントによるペネトレーションテストに参入。AIが人間のセキュリティチームの対処能力を上回るペースでコードを生成する現状への警鐘と、AIパワードのセキュリティ対策の重要性を論じる。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://thenewstack.io/aws-opensearch-serverless-agentic-rebuild/" target="_blank">AWSがエージェントワークロードに向けてOpenSearchのアーキテクチャを刷新</a></h3>
+    <p class="summary">AWSがOpenSearch Serverlessの既存アーキテクチャを廃棄し、AIエージェントワークロードに最適化した新設計に移行した理由と技術的背景を解説。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/05/29/building-a-cloud-native-internal-developer-platform-with-kubernetes-gitops-and-supply-chain-security/" target="_blank">Kubernetes・GitOps・サプライチェーンセキュリティでクラウドネイティブIDP構築</a></h3>
+    <p class="summary">現代のソフトウェアデリバリーはコードではなく「プラットフォーム」がボトルネック。KubernetesベースのInternal Developer Platform設計の全体像を解説する実践的な記事。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/05/28/the-kubernetes-integration-tax-prometheus-cilium-and-production-reality/" target="_blank">Kubernetesの統合税：Prometheus・Ciliumと本番環境の現実</a></h3>
+    <p class="summary">Hubbleは正常なのにGrafanaのCiliumメトリクスが表示されない……本番でしか踏まない統合の落とし穴と、その解決策を実体験から語るリアルな記事。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/05/26/how-jaeger-is-evolving-to-trace-ai-agents-with-opentelemetry/" target="_blank">JaegerがOpenTelemetryでAIエージェントをトレースする方向へ進化</a></h3>
+    <p class="summary">マイクロサービスの分散トレーシングを担ってきたJaegerが、AIエージェントアーキテクチャへの対応を強化。OpenTelemetryを通じた新しい観測性の方向性を解説。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://thenewstack.io/forward-deployed-engineers-ai/" target="_blank">OpenAIとAnthropicがForward Deployed Engineerチームを採用する理由</a></h3>
+    <p class="summary">AI企業がパワフルなAPIを提供するだけでは顧客の課題は解決しない——現場に常駐する「Forward Deployed Engineer」という職種が注目される背景を解説。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://thenewstack.io/claude-opus-48-release/" target="_blank">Claude Opus 4.8リリース：エフォートコントロール・動的ワークフロー・改善された誠実性</a></h3>
+    <p class="summary">AnthropicがClaude Opus 4.8を発表。コスト効率の高いFastモード、誠実性の向上、欺瞞行動の低減が主な改良点。クラウドネイティブワークロードへの統合が進む。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://thenewstack.io/percona-20-oursql-foundation-rebrand/" target="_blank">Percona、創業20周年で新財団設立とリブランド</a></h3>
+    <p class="summary">MySQL/PostgreSQLのOSSサポートで知られるPerconaが20周年を記念し、「OurSQL Foundation」を設立。持続可能なOSSデータベースエコシステムの構築へ向けて動き出す。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/05/26/three-tag-leads-walk-into-the-toc/" target="_blank">3人のTAGリードがTOCに入る——CNCF 2026年コホートの異例パターン</a></h3>
+    <p class="summary">2026年のCNCF TOC新メンバーのうち3名が、TAG Security・TAG Operational Resilience・TAG Developer Experience出身という異例のパターンを考察する。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-oss" class="tab-content">
+<p class="section-desc">r/linux · r/opensource · r/programming · GitHub Trending</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Hacker News · セキュリティ</span>
+    <h3><a href="https://www.tomshardware.com/tech-industry/cyber-security/microsofts-github-bans-security-researcher-who-posted-zero-day-windows-exploits-because-company-ruined-their-life-expert-claims-action-is-vindictive-and-promises-further-retaliation" target="_blank">GitHubがWindowsゼロデイ脆弱性を公開したセキュリティ研究者をBANした</a></h3>
+    <p class="summary">Microsoftが自社のGitHubプラットフォームを使い、Windowsのゼロデイ脆弱性を投稿したセキュリティ研究者のアカウントを停止。専門家は「報復行為」と批判しており、脆弱性開示をめぐる倫理論争が再燃している。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 458</span>
+      <span class="comments">💬 216</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">Hacker News · プライバシー</span>
+    <h3><a href="https://www.bbc.com/future/article/20260513-your-car-is-spying-on-you-its-about-to-get-worse" target="_blank">車はあなたについて驚くほど大量のデータを収集している</a></h3>
+    <p class="summary">現代の車は走行履歴・音声・乗客の行動パターンまで収集する監視装置に変貌しつつある。自動車メーカーのデータビジネスの実態と、今後さらに悪化する可能性をBBCが詳報。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 395</span>
+      <span class="comments">💬 191</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://nick.winans.io/blog/nice-nano/" target="_blank">寮の部屋から100万ドルの製品を作った話（2025年）</a></h3>
+    <p class="summary">OSSのワイヤレスキーボードコントローラー「nice!nano」を学生時代に開発し、累計100万ドル以上の売上を達成した実話。個人開発者がOSSで成功するロールモデル。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 468</span>
+      <span class="comments">💬 72</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.theverge.com/report/939442/wikipedia-editors-protest-wikimedia-layoffs-strike" target="_blank">数百人のWikipedia編集者がストライキを予告——Wikimediaのレイオフへの抗議</a></h3>
+    <p class="summary">WikimediaがWikipediaを支える重要エンジニアチームを解雇したことに反発し、多数のボランティア編集者がストライキを予告。インターネット最後の信頼できる知識拠点への影響が懸念される。</p>
+    <div class="card-meta">
+      <span class="source">The Verge</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.theverge.com/ai-artificial-intelligence/939765/ai-training-data-startup-shift-free-cleaning" target="_blank">ロボット訓練のためにあなたの家を無料で掃除するAIスタートアップ</a></h3>
+    <p class="summary">AI訓練スタートアップ「Shift」が家庭を無料で清掃する代わりに、ロボット訓練データとして映像を収集する取り組みを開始。人間の行動データの価値と倫理的課題を浮き彫りにする。</p>
+    <div class="card-meta">
+      <span class="source">The Verge</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.wired.com/story/physical-media-is-having-a-comeback-the-next-console-generation-may-kill-it/" target="_blank">フィジカルメディアが復活しつつある——しかし次世代コンソールが葬るかもしれない</a></h3>
+    <p class="summary">Blu-rayや物理メディアが見直されている中、PS6やMicrosoft Project Helixが光学ドライブを廃止する可能性があり、復活の流れを断ち切るかもしれない。</p>
+    <div class="card-meta">
+      <span class="source">Wired</span>
+    </div>
+  </div>
+</div>
+
+<div class="trending-section">
+  <div class="trending-header"><h2>⭐ 今日のGitHub急上昇</h2></div>
+  <div class="trending-grid">
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank">harry0703/MoneyPrinterTurbo</a></div>
+      <div class="repo-desc">AI大規模言語モデルを使ってワンクリックで高画質ショート動画を自動生成するツール</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 3,563 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/Leonxlnx/taste-skill" target="_blank">Leonxlnx/taste-skill</a></div>
+      <div class="repo-desc">AIに「センス」を与えるスキル——退屈で平凡なスロップ生成を防ぐためのプロンプトスキルファイル</div>
+      <div class="repo-meta">
+        <span class="lang">Shell</span>
+        <span class="stars-today">★ 2,066 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/microsoft/markitdown" target="_blank">microsoft/markitdown</a></div>
+      <div class="repo-desc">各種ファイルやOfficeドキュメントをMarkdownに変換するMicrosoft製Pythonツール</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 1,876 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/byoungd/English-level-up-tips" target="_blank">byoungd/English-level-up-tips</a></div>
+      <div class="repo-desc">あなたの英語力を大きく伸ばす可能性がある上級英語学習ガイド</div>
+      <div class="repo-meta">
+        <span class="lang">-</span>
+        <span class="stars-today">★ 1,564 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/affaan-m/ECC" target="_blank">affaan-m/ECC</a></div>
+      <div class="repo-desc">Claude Code・Codex・OpenCode等向けのエージェントハーネスパフォーマンス最適化システム（スキル・本能・メモリ・セキュリティ機能付き）</div>
+      <div class="repo-meta">
+        <span class="lang">JavaScript</span>
+        <span class="stars-today">★ 1,413 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/DigitalPlatDev/FreeDomain" target="_blank">DigitalPlatDev/FreeDomain</a></div>
+      <div class="repo-desc">誰でも無料でドメインを取得できるサービス「DigitalPlat FreeDomain」</div>
+      <div class="repo-meta">
+        <span class="lang">HTML</span>
+        <span class="stars-today">★ 1,317 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/farion1231/cc-switch" target="_blank">farion1231/cc-switch</a></div>
+      <div class="repo-desc">Claude Code・Codex・OpenCode・Gemini CLIなど複数のAIエージェントを一括管理するクロスプラットフォームAll-in-Oneデスクトップアシスタント</div>
+      <div class="repo-meta">
+        <span class="lang">Rust</span>
+        <span class="stars-today">★ 1,017 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/anthropics/skills" target="_blank">anthropics/skills</a></div>
+      <div class="repo-desc">Anthropic公式のエージェントスキル公開リポジトリ</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 1,011 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/run-llama/liteparse" target="_blank">run-llama/liteparse</a></div>
+      <div class="repo-desc">高速・高機能・オープンソースのドキュメントパーサー（LlamaIndex製、Rust実装）</div>
+      <div class="repo-meta">
+        <span class="lang">Rust</span>
+        <span class="stars-today">★ 932 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/hardikpandya/stop-slop" target="_blank">hardikpandya/stop-slop</a></div>
+      <div class="repo-desc">文章からAI特有の表現・クセを取り除くためのスキルファイル</div>
+      <div class="repo-meta">
+        <span class="lang">-</span>
+        <span class="stars-today">★ 618 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/twentyhq/twenty" target="_blank">twentyhq/twenty</a></div>
+      <div class="repo-desc">AI対応設計のSalesforce代替オープンソースCRM</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 575 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/Axorax/awesome-free-apps" target="_blank">Axorax/awesome-free-apps</a></div>
+      <div class="repo-desc">PCとモバイル向けの優れた無料アプリのキュレーションリスト</div>
+      <div class="repo-meta">
+        <span class="lang">JavaScript</span>
+        <span class="stars-today">★ 566 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/iii-hq/iii" target="_blank">iii-hq/iii</a></div>
+      <div class="repo-desc">すべてのサービスをリアルタイムで簡単に構成・拡張・観測できる統合ツール</div>
+      <div class="repo-meta">
+        <span class="lang">Rust</span>
+        <span class="stars-today">★ 458 stars today</span>
+      </div>
+    </div>
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/EveryInc/compound-engineering-plugin" target="_blank">EveryInc/compound-engineering-plugin</a></div>
+      <div class="repo-desc">Claude Code・Codex・Cursor等向けの公式Compound Engineeringプラグイン</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 354 stars today</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-startups" class="tab-content">
+<p class="section-desc">r/startups · r/technology · TechCrunch</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">TechCrunch · チップ</span>
+    <h3><a href="https://techcrunch.com/2026/05/29/xcena-secures-135m-at-570m-valuation-betting-on-memory-as-ais-real-bottleneck/" target="_blank">AIの本当のボトルネックはコンピュートではなくメモリだ——韓国スタートアップXcenaが1億3500万ドル調達</a></h3>
+    <p class="summary">韓国のチップスタートアップXcenaが5億7000万ドルのバリュエーションで1億3500万ドルを調達。AIの真のボトルネックはGPU演算能力ではなくメモリ帯域幅だと主張し、独自のメモリアーキテクチャで勝負に出る。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">TechCrunch · エンタープライズAI</span>
+    <h3><a href="https://techcrunch.com/2026/05/28/gleans-top-line-crosses-300m-as-ai-budget-cutting-becomes-its-major-selling-point/" target="_blank">GleanのARRが3億ドルを突破——「AIコスト削減」が最大の売りに</a></h3>
+    <p class="summary">エンタープライズAI検索スタートアップGleanが年間収益3億ドルを達成し、前年比3倍成長。大手テック企業が同カテゴリに参入する中でも、AIコスト最適化というメッセージで差別化に成功した。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/05/28/waymo-dominates-texas-autonomous-vehicle-registrations-as-tesla-trails-behind/" target="_blank">自動運転登録台数でWaymoが圧倒的首位——テスラは大きく遅れる</a></h3>
+    <p class="summary">テキサス州の新しいAV追跡ツールにより、ロボタクシーと自動運転トラックの台数が初めて明確に把握可能に。Waymoの台数がテスラを大幅に上回ることが明らかになった。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/05/28/blue-origins-new-glenn-rocket-explodes-during-testing-in-florida/" target="_blank">Blue Originのニューグレンロケット、フロリダでの静的燃焼試験中に爆発</a></h3>
+    <p class="summary">Jeff BezosのBlue OriginがフロリダでNew Glennロケットの試験中に爆発事故。SpaceXとの競争に挑むBlue Originにとって大きな打撃となる可能性がある。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/05/28/how-to-apply-to-startup-battlefield-2026-what-you-need-ahead-of-the-june-8-deadline/" target="_blank">Startup Battlefield 2026の応募方法——6月8日の締切に向けて</a></h3>
+    <p class="summary">TechCrunchの名物ピッチコンテスト「Startup Battlefield 2026」の応募締切は6月8日。今すぐ応募を完成させるための最終チェックリスト。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-movies" class="tab-content">
+<p class="section-desc">r/movies · r/TrueFilm · r/flicks · Roger Ebert · IndieWire</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">IndieWire · TVシリーズ</span>
+    <h3><a href="https://www.indiewire.com/news/general-news/house-of-the-dragon-season-3-preview-bloodiest-battle-ever-1235196966/" target="_blank">『ハウス・オブ・ザ・ドラゴン』シーズン3、「史上最も血みどろの海戦」の映像をATXフェスで初公開</a></h3>
+    <p class="summary">ATX TVフェスティバルのオープニングナイトで、ショーランナーのRyan Condalとキャストが「ガレット湾の戦い」を描くシーズン3の独占映像を披露。シリーズ最大規模の戦闘シーンが期待される注目プレビュー。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+  <div class="card-feature">
+    <span class="badge">IndieWire · 映画レビュー</span>
+    <h3><a href="https://www.indiewire.com/criticism/movies/power-ballad-review-paul-rudd-nick-jonas-john-carney-1235196996/" target="_blank">『Power Ballad』レビュー：John Carneyが問う——1曲があなたの人生を台無しにすることはあるか</a></h3>
+    <p class="summary">『Once』のジョン・カーニー監督最新作。Paul RuddとNick Jonasが共演し、音楽が人生にもたらす光と影の両面を描く。カーニーらしい音楽愛に加えて、人間の醜い側面とも真摯に向き合った作品。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/features/podcast/hacks-series-finale-explained-1235196971/" target="_blank">『Hacks』シリーズフィナーレの驚きの展開——共同制作者が語るその必然性</a></h3>
+    <p class="summary">7年前のピッチ時点から結末は変わっていなかったと制作者が明かす。『Hacks』の最終回が持つ論理的必然性と、あのサプライズ展開の意図を解説する。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/streaming/deli-boys-season-2-hulu-tv-review-2026" target="_blank">Hulu『デリ・ボーイズ』シーズン2——コメディの傑作がさらに笑えるように</a></h3>
+    <p class="summary">エピソード数は減ったが、笑いの密度は増した。シーズン2はシリーズ史上最も面白いとRoger Ebertが高く評価する好意的なレビュー。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/features/the-four-seasons-season-2-netflix-tina-fey-tv-review-2026" target="_blank">Netflix『The Four Seasons』シーズン2——熟成することで良くなるものもある</a></h3>
+    <p class="summary">Tina Fey主演のNetflixシリーズがシーズン2でさらに磨きがかかった。人物たちの成長が説得力をもって描かれる笑いと感動のシーズン。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/features/interviews/nick-kroll-mating-season-interview-1235196760/" target="_blank">Nick Krollが語る『Mating Season』——「Big Mouthの動物版」ではない理由</a></h3>
+    <p class="summary">Netflixの新作アニメシリーズで動物の論理を通じて大人のテーマを扱うNick Kroll。「Big Mouthとは全く違うアプローチだ」とその本質を語るインタビュー。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/features/craft/josh-johnson-interview-comedy-special-symphony-1235196628/" target="_blank">Josh JohnsonのHBOスペシャル『Symphony』——音楽がコメディに新たな意味をもたらす</a></h3>
+    <p class="summary">HBOのコメディスペシャルで音楽を大胆に取り入れたJosh JohnsonとJacob Menache監督が、長年温めてきた作品の制作過程を語る。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/books/documentary-now-4th-edition-is-an-incredible-companion-to-beloved-show" target="_blank">『Documentary Now!』公式本第4版——傑作コメディの完璧なコンパニオン</a></h3>
+    <p class="summary">現代最高のコメディ番組の一つとも評される『Documentary Now!』の公式コンパニオンブック最新版のレビュー。番組の奥深さをさらに味わえる一冊。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/features/going-the-distance-seeing-rocky-in-concert" target="_blank">コンサートで観る『ロッキー』——Bill Contiの音楽が主役の特別体験</a></h3>
+    <p class="summary">Sylvester Stalloneのスポーツ映画の名作を、Bill Contiの楽曲をフルオーケストラで演奏しながら映像とともに楽しむコンサート体験のレポート。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
