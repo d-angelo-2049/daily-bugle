@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Bugle — 2026-06-02</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --tag-bg: #1f2937;
+      --feature-bg: #0e1825;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0e1825 0%, #161b22 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #58a6ff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header .meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Tabs */
+    .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Main layout */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* Section header */
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Feature cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .card-feature {
+      background: var(--feature-bg);
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card-feature::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #58a6ff, #3fb950);
+    }
+    .card-feature .badge {
+      display: inline-block;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(88, 166, 255, 0.3);
+    }
+    .card-feature h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .card-feature h3 a { color: var(--text); }
+    .card-feature h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card-feature .summary {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .card-meta .source {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      background: var(--tag-bg);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .card-meta .score {
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .card-meta .comments {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* Grid cards */
+    .grid-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      margin-top: 8px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover {
+      border-color: #444c56;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .card h3 a { color: var(--text); }
+    .card h3 a:hover { color: var(--accent); text-decoration: none; }
+    .card .summary {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    /* GitHub Trending special */
+    .trending-section { margin-bottom: 32px; }
+    .trending-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .trending-header h2 { font-size: 1rem; font-weight: 700; }
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .trending-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+    .trending-card:hover { border-color: #444c56; }
+    .trending-card .repo-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .trending-card .repo-desc {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .trending-card .repo-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .trending-card .lang { color: var(--accent2); font-weight: 600; }
+    .trending-card .stars-today { color: #f78166; font-weight: 600; }
+
+    @media (max-width: 768px) {
+      main { padding: 20px 16px; }
+      .features { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      header { padding: 20px 16px 14px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Daily Bugle</h1>
+  <div class="meta">2026年6月2日（火）&nbsp;·&nbsp; 生成: Claude Code (claude-sonnet-4-6)</div>
+</header>
+
+<div class="tabs-wrapper">
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('ai', this)">AI &amp; ML</button>
+    <button class="tab-btn" onclick="switchTab('frontend', this)">Frontend</button>
+    <button class="tab-btn" onclick="switchTab('backend', this)">Backend</button>
+    <button class="tab-btn" onclick="switchTab('cloud', this)">Cloud &amp; CNCF</button>
+    <button class="tab-btn" onclick="switchTab('oss', this)">OSS &amp; Linux</button>
+    <button class="tab-btn" onclick="switchTab('startups', this)">Startups</button>
+    <button class="tab-btn" onclick="switchTab('movies', this)">Movies</button>
+  </nav>
+</div>
+
+<main>
+
+<div id="tab-ai" class="tab-content active">
+<p class="section-desc">Hacker News · r/MachineLearning · r/artificial · r/LocalLLaMA · MIT Tech Review AI</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Hacker News · IPO速報</span>
+    <h3><a href="https://www.anthropic.com/news/confidential-draft-s1-sec" target="_blank">Anthropic、SECに機密扱いでS-1申請書を提出</a></h3>
+    <p class="summary">AnthropicがSECに機密扱いでS-1申請書を提出し、IPO（新規株式公開）に向けた手続きを正式に開始した。時価総額6,000億ドル超とも言われる同社の上場は、AI業界史上最大規模のIPOになる見通しで、OpenAIとのIPO競争にも注目が集まる。The Vergeも同日、「Anthropic has officially filed to go public」として速報した。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 133</span>
+      <span class="comments">💬 80</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">MIT Tech Review · BCI</span>
+    <h3><a href="https://www.technologyreview.com/2026/06/01/1138133/china-world-first-brain-chip/" target="_blank">中国、世界初の侵襲型ブレイン・コンピューター・チップを承認</a></h3>
+    <p class="summary">中国が世界初となる侵襲型BCI（ブレイン・コンピューター・インターフェース）チップを承認した。頸椎損傷で四肢麻痺となった患者がチップ埋め込みにより自力でペンを持ち文字を書けるようになった事例が報告されており、Neuralink と並ぶ医療技術の重要な前進として世界中で注目を集めている。</p>
+    <div class="card-meta">
+      <span class="source">MIT Tech Review AI</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/06/01/duckduckgo-makes-its-no-ai-search-engine-easier-to-access-as-its-traffic-booms/" target="_blank">DuckDuckGo、「AI不使用」検索をより簡単にアクセス可能に</a></h3>
+    <p class="summary">AI要約を組み込まない検索エンジンとして差別化するDuckDuckGoが、Chrome・Firefox向けの「no AI」拡張機能をリリース。AIオーバービューを嫌うユーザー層のトラフィックが急増しており、反AI検索需要の高まりを示している。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 70</span>
+      <span class="comments">💬 19</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.technologyreview.com/2026/05/29/1138107/how-the-popes-magnifica-humanitas-offers-a-template-for-individuals-to-meet-the-ai-moment/" target="_blank">法王の回勅「Magnifica Humanitas」が示すAI時代への指針</a></h3>
+    <p class="summary">ローマ法王レオ14世がAIに関する回勅を発表し「技術は決して中立ではない」と強調。AIの時代において個人が勇気と連帯を持って行動することを呼びかける内容で、技術者・政策立案者への重要なメッセージとして注目される。</p>
+    <div class="card-meta">
+      <span class="source">MIT Tech Review AI</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://github.com/stanford-cs336/assignment1-basics/blob/main/CLAUDE.md" target="_blank">スタンフォードCS336: AIエージェント向けガイドライン公開</a></h3>
+    <p class="summary">スタンフォード大学のLLM基礎講義CS336がAIエージェント向けのCLAUDE.mdをGitHubで公開。教育現場でのエージェント活用方針が垣間見える資料として、AI研究者・実践者から注目を集めている。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 6</span>
+      <span class="comments">💬 0</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.technologyreview.com/2026/06/01/1138207/the-download-china-bci-brain-implant-nvidia-ai-chips-laptops/" target="_blank">The Download: 中国のBCI野望とNvidia AIチップ最新動向</a></h3>
+    <p class="summary">中国のBCI承認とNvidiaのAIチップ搭載ノートPC展開を取り上げた今日のMIT Tech Reviewニュースレター。AI・半導体・脳科学が交差する最新の技術動向をまとめて把握できる。</p>
+    <div class="card-meta">
+      <span class="source">MIT Tech Review AI</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-frontend" class="tab-content">
+<p class="section-desc">r/javascript · r/reactjs · r/css · CSS-Tricks · Smashing Magazine</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Smashing Magazine · CSS新機能</span>
+    <h3><a href="https://smashingmagazine.com/2026/05/building-self-correcting-color-systems-contrast-color/" target="_blank">アルゴリズム的テーマエンジン: `contrast-color()` で自己修正するカラーシステムを構築</a></h3>
+    <p class="summary">2025年時点でもウェブサイトの70%がWCAGのコントラスト基準を満たせていない。CSSの新関数 `contrast-color()` を活用したアルゴリズム的テーマエンジンなら、JavaScriptなしでアクセシブルなカラーシステムを自動構築できる。デザインシステムのメンテナンスコストを抜本的に削減できる実践的アプローチ。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">Smashing Magazine · CSS新関数</span>
+    <h3><a href="https://smashingmagazine.com/2026/05/mathematical-layouts-sibling-index-sibling-count/" target="_blank">`sibling-index()` と `sibling-count()` で実現する数学的レイアウト</a></h3>
+    <p class="summary">CSSの新関数 `sibling-index()` と `sibling-count()` を使えば、`:nth-child()` ルールもJSも不要で要素位置ベースのスタガーエフェクトが1行で実現できる。5要素でも5,000要素でも同じコードで対応可能で、アニメーションやグリッドレイアウトに革命をもたらす。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://css-tricks.com/astro-markdown-component-utility-any-framework/" target="_blank">AstroのMarkdownコンポーネントをあらゆるフレームワークで活用する</a></h3>
+    <p class="summary">AstroのMarkdownコンポーネントを任意のフレームワークでも使えるようにするユーティリティを紹介。前回記事の続編として、より広い環境でのMarkdown活用法を解説する。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://css-tricks.com/whats-important-12/" target="_blank">What's !important #12: Safariテスト・::checkmark・HTML Anchor Positioning</a></h3>
+    <p class="summary">Safari環境なしでCSSをテストする方法、新擬似要素 `::checkmark`、HTML Anchor Positioningなど最新CSS動向をまとめたニュースレター第12号。実用的なヒントが満載。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://css-tricks.com/cross-document-view-transitions-part-2/" target="_blank">クロスドキュメント View Transitions: 数百要素へのスケール対応</a></h3>
+    <p class="summary">ページ遷移アニメーションを多数の要素に適用する際に発生する `view-transition-name` の一意性問題と、セレクター爆発を避ける解決策を解説。大規模サイトへのView Transitions導入に必須の知識。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://css-tricks.com/revealing-text-with-css-letter-spacing/" target="_blank">CSS `letter-spacing` でテキストリビールエフェクト</a></h3>
+    <p class="summary">`::nth-letter` が実装される前でも、`letter-spacing` や `::first-word`・`::first-line` などの既存CSS機能でクールなテキストエフェクトが作れることを実例で紹介する。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://smashingmagazine.com/2026/05/prototype-users-fix-protopie/" target="_blank">プロトタイプはユーザーに正直ではない — その解決策</a></h3>
+    <p class="summary">ユーザビリティテストでの参加者が「本物のアプリではない」と気づく瞬間を分析。それ以降のデータが歪む問題への対策として、プロトタイプの忠実度を高める具体的な方法を提案する。</p>
+    <div class="card-meta">
+      <span class="source">Smashing Magazine</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://css-tricks.com/technical-writing-in-the-ai-age/" target="_blank">AI時代のテクニカルライティング</a></h3>
+    <p class="summary">AIが文章を生成できる時代に、人間がテクニカルライティングをする意義と価値について考察。完全にAIの話ではなく、AI時代における人間の書き手の役割を問い直す視点が新鮮。</p>
+    <div class="card-meta">
+      <span class="source">CSS-Tricks</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-backend" class="tab-content">
+<p class="section-desc">r/golang · r/rust · r/java · r/python · InfoQ · The Pragmatic Engineer</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Pragmatic Engineer · 市場動向</span>
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/state-of-the-job-market-2026" target="_blank">2026年ソフトウェアエンジニア求人市場の実態</a></h3>
+    <p class="summary">独自データに基づく2026年技術求人市場の深掘り分析。AIエンジニアリング需要の急増、AIエンジニアリングが従来のSWE採用を「置き換えている」のかどうかをエビデンスベースで検証。転職・採用を考えている人全員必読の内容。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">InfoQ · パフォーマンス</span>
+    <h3><a href="https://www.infoq.com/news/2026/06/shopify-graphql-cardinal-bfs/" target="_blank">Shopify、幅優先探索エンジンでGraphQL実行を最大15倍高速化</a></h3>
+    <p class="summary">Shopifyが新GraphQL実行エンジン「GraphQL Cardinal」を導入し、従来の深さ優先探索から幅優先探索（BFS）に変更することで大規模GraphQLパフォーマンスを最大15倍に向上させた。N+1問題の根本解決につながるアーキテクチャ変更として注目される。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/why-rust-is-different-with-alice" target="_blank">Rustが他言語と違う理由 — Alice Ryhl (Google Android Rustチーム)</a></h3>
+    <p class="summary">GoogleのAndroid RustチームのAlice Ryhlが、開発者がRustを愛する理由と、信頼性の高いソフトウェア構築においてRustがいかに強力かをインタビュー形式で解説する。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/opencode" target="_blank">OpenCodeを作る — Dax Raadが語る爆発的成長の背景</a></h3>
+    <p class="summary">AIコーディングツールOpenCodeの共同創業者Dax Raadが、急成長の背景、現行AIコーディングツールの限界、そしてエンジニアリングの判断力が今もなぜ不可欠なのかを語るポッドキャスト回。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.infoq.com/news/2026/06/badhost-ai-systems-vulnerability/" target="_blank">BadHost脆弱性: AIエージェント・LLMゲートウェイに影響する認証バイパス</a></h3>
+    <p class="summary">週3億2500万ダウンロードを誇るPython Webフレームワーク「Starlette」に重大な認証バイパス脆弱性「BadHost」が発見された。AIエージェント、LLM評価システム、LLMゲートウェイに広く影響する高リスクな脆弱性として緊急対応が推奨される。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-a-trend-of-trying-to-cut" target="_blank">AIトークン費用の削減トレンドがエンジニアリング部門で広がる</a></h3>
+    <p class="summary">トップダウン・ボトムアップ両面からAIトークン費用合理化の動きが加速している。CursorのAIコーディング統計分析や、GCPが月200万ドル規模の顧客を警告なしに突然停止した事例なども紹介。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://newsletter.pragmaticengineer.com/p/the-pulse-antigravity-20-takes-ide" target="_blank">Antigravity 2.0がIDEの「IDE」を取り除く — Googleの新AI IDEへの反発</a></h3>
+    <p class="summary">GoogleのリデザインされたAI IDEへのネガティブな反応、Googleの製品エコシステムが混乱している理由、MetaがRecord収益・利益を達成しながらも従業員10%削減を断行した経緯などを取り上げる。</p>
+    <div class="card-meta">
+      <span class="source">The Pragmatic Engineer</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.infoq.com/articles/solving-ai-productivity-paradox-test-automation/" target="_blank">テスト自動化におけるAI生産性のパラドックスを超える</a></h3>
+    <p class="summary">「AIはその上に構築された抽象化をスケールさせる」というAI生産性パラドックスを解説。構造的バリデーションから知覚・意図のバリデーションへシフトする必要性を論じる実践的な記事。</p>
+    <div class="card-meta">
+      <span class="source">InfoQ</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-cloud" class="tab-content">
+<p class="section-desc">r/kubernetes · r/aws · r/docker · r/devops · The New Stack · CNCF Blog</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">CNCF Blog · プラットフォームエンジニアリング</span>
+    <h3><a href="https://www.cncf.io/blog/2026/05/29/building-a-cloud-native-internal-developer-platform-with-kubernetes-gitops-and-supply-chain-security/" target="_blank">Kubernetes + GitOps + サプライチェーンセキュリティで内部開発者プラットフォームを構築する</a></h3>
+    <p class="summary">モダンなソフトウェアデリバリーのボトルネックはアプリコードではなくプラットフォームにある。本記事はKubernetesとGitOps、サプライチェーンセキュリティを組み合わせたクラウドネイティブIDP（内部開発者プラットフォーム）の設計を解説。開発者体験と安全性を両立させる具体的な構築指針を提供する。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">CNCF Blog · GPUスケーリング</span>
+    <h3><a href="https://www.cncf.io/blog/2026/05/27/gpu-autoscaling-on-kubernetes-with-keda-building-an-external-scaler/" target="_blank">KubernetesでGPUオートスケーリング — KEDAでExternal Scalerを構築する</a></h3>
+    <p class="summary">vLLM・Triton・AIエージェント推論などのGPUワークロードをKubernetesで動かす際、CPUやメモリベースのオートスケーリングでは対応できない問題をKEDA外部スケーラーで解決する方法を詳解。AIインフェレンス基盤を運用するSREに必須の知識。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/05/28/the-kubernetes-integration-tax-prometheus-cilium-and-production-reality/" target="_blank">Kubernetesの統合税: PrometheusとCiliumの本番の現実</a></h3>
+    <p class="summary">Grafanaダッシュボードがブランクになった深夜のインシデントなど、Prometheus + Ciliumの本番運用で支払う「統合コスト」の現実を赤裸々に語る実践記事。ツールは動いているのに可視化できない落とし穴への対処法を紹介。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://thenewstack.io/ai-retrieval-at-scale/" target="_blank">大規模AIの検索はツール問題ではなくシステム設計問題になっている</a></h3>
+    <p class="summary">RAGなどのAI検索処理をスケールさせる際の課題は、どのツールを選ぶかではなく、いかにシステム全体を設計するかにシフトしてきていると論じる考察記事。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.cncf.io/blog/2026/06/01/dynamic-configuration-for-cloud-native-swift-services/" target="_blank">クラウドネイティブなSwiftサービスの動的設定管理</a></h3>
+    <p class="summary">KubernetesエコシステムでSwiftサービスを動かす際のConfigMaps・OpenTelemetry等との統合方法と、Prometheusを含む動的設定管理の実装例を紹介する。</p>
+    <div class="card-meta">
+      <span class="source">CNCF Blog</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://thenewstack.io/skiplabs-skipper-ai-coding-tool-agent/" target="_blank">フィードバック不要で出荷するAIコーディングエージェント「Skipper」</a></h3>
+    <p class="summary">SkipLabsの「Skipper」は、ユーザーのフィードバックを待たずに自律的に出荷まで進めるAIコーディングエージェント。エージェント自律性の新しいアプローチとして注目される。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://thenewstack.io/hyland-enterprise-context-engine-agents/" target="_blank">ベンダーがAIエージェントで「爆発させた」失敗の本質</a></h3>
+    <p class="summary">エンタープライズAIエージェント導入でベンダーが犯した最大のミスは「コンテキストを軽視したこと」とHylandが分析。Enterprise Context Engineを軸とした正しいエージェント設計の方向性を提案する。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://thenewstack.io/sap-sapphire-ai-context/" target="_blank">SAPがSapphireで主張: エンタープライズAIの課題はコンテキスト問題</a></h3>
+    <p class="summary">SAP Sapphireでの発表で、SAPはエンタープライズAIの成否を決めるのはモデルの性能ではなくコンテキストの質と整備だと主張。エンタープライズAI戦略の方向性を示す重要な発信。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-oss" class="tab-content">
+<p class="section-desc">r/linux · r/opensource · r/programming · Hacker News · GitHub Trending</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">Hacker News · プライバシー</span>
+    <h3><a href="https://hacktivis.me/articles/cloudflare-turnstile-webgl-fingerprinting" target="_blank">Cloudflare Turnstile、フィンガープリント採取可能なWebGLを強制使用していることが判明</a></h3>
+    <p class="summary">CloudflareのCAPTCHA代替サービス「Turnstile」が、プライバシー重視ユーザーには問題となるWebGLのフィンガープリント採取を内部で強制使用していることが判明した。756スコア・438コメントという高い関心を集め、ブラウザ設定でWebGLを無効化しているユーザーへの影響が議論されている。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 756</span>
+      <span class="comments">💬 438</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">Hacker News · セキュリティ</span>
+    <h3><a href="https://github.com/RedHatInsights/javascript-clients/issues/492" target="_blank">Red Hat Cloud Servicesのnpmパッケージに悪意のあるコードが混入</a></h3>
+    <p class="summary">Red HatのOSSプロジェクト「javascript-clients」リポジトリで悪意のあるnpmパッケージが検出された。サプライチェーン攻撃として広く議論され、オープンソースプロジェクトのセキュリティ管理のあり方を改めて問う事案となっている。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 599</span>
+      <span class="comments">💬 310</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://point.free/blog/gemma-4-on-a-2016-xeon/" target="_blank">10年前のXeonで十分 — 2016年製XeonでGemma 4を動かす</a></h3>
+    <p class="summary">高価なGPUがなくても2016年製Xeonプロセッサ上でGemma 4の推論が十分動作することを実証した記事。コスパ重視でローカルLLMを試したい開発者に刺さる内容で512スコアを獲得。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 512</span>
+      <span class="comments">💬 228</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://tylercipriani.com/blog/2026/05/28/chuwi-minibook-x/" target="_blank">Chuwi Minibook X レビュー</a></h3>
+    <p class="summary">格安小型ノートPC「Chuwi Minibook X」の詳細レビュー。362スコア・273コメントという反響の大きさが、ハイコスパハードウェアへの根強いコミュニティの関心を物語っている。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 362</span>
+      <span class="comments">💬 273</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://torrentfreak.com/the-pirate-bay-remains-resilient-20-years-after-the-raid/" target="_blank">家宅捜索から20年 — The Pirate Bayは今も健在</a></h3>
+    <p class="summary">2006年の警察による家宅捜索から20年が経過した今もPirate Bayが存続し続けていることへの振り返り。ISPとのいたちごっこ、トレント文化の変遷を論じるノスタルジックかつ示唆に富む記事。</p>
+    <div class="card-meta">
+      <span class="source">Hacker News</span>
+      <span class="score">↑ 230</span>
+      <span class="comments">💬 91</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://thenewstack.io/nanoclaw-openclaw-agent-security/" target="_blank">自分のコードをOpenClawで発見した開発者が離れた理由</a></h3>
+    <p class="summary">開発者Gavriel Cohenが自身のコードがオープンソースプロジェクト「OpenClaw」に無断使用されていることを発見し、離脱を決断した一件を報じる。AIエージェントとOSSライセンスの倫理問題に一石を投じる事案。</p>
+    <div class="card-meta">
+      <span class="source">The New Stack</span>
+    </div>
+  </div>
+</div>
+
+<div class="trending-section">
+  <div class="trending-header"><h2>⭐ 今日のGitHub急上昇</h2></div>
+  <div class="trending-grid">
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank">harry0703/MoneyPrinterTurbo</a></div>
+      <div class="repo-desc">AI大規模モデルを使ってワンクリックで高品質な短編動画を自動生成するツール。</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 3,325 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/microsoft/markitdown" target="_blank">microsoft/markitdown</a></div>
+      <div class="repo-desc">Office文書やPDFなど各種ファイルをMarkdownに変換するMicrosoft製Pythonツール。</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 3,086 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/affaan-m/ECC" target="_blank">affaan-m/ECC</a></div>
+      <div class="repo-desc">Claude Code・Codex・OpenCode・Cursor等向けのエージェントハーネス性能最適化システム。スキル・本能・メモリ・セキュリティ機能を統合。</div>
+      <div class="repo-meta">
+        <span class="lang">JavaScript</span>
+        <span class="stars-today">★ 1,694 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/D4Vinci/Scrapling" target="_blank">D4Vinci/Scrapling</a></div>
+      <div class="repo-desc">単一リクエストからフルスケールクロールまで何でも対応するアダプティブWebスクレイピングフレームワーク。</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 1,475 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/nesquena/hermes-webui" target="_blank">nesquena/hermes-webui</a></div>
+      <div class="repo-desc">WebブラウザやスマートフォンからHermesエージェントを使うための最適なUIアプリ。</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 984 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/OpenBMB/VoxCPM" target="_blank">OpenBMB/VoxCPM</a></div>
+      <div class="repo-desc">トークナイザーなしで多言語音声生成・創造的音声デザイン・リアルなクローニングを実現するTTSモデル。</div>
+      <div class="repo-meta">
+        <span class="lang">Python</span>
+        <span class="stars-today">★ 880 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/FareedKhan-dev/train-llm-from-scratch" target="_blank">FareedKhan-dev/train-llm-from-scratch</a></div>
+      <div class="repo-desc">データダウンロードからテキスト生成まで、LLMをゼロからトレーニングする方法をまとめたJupyterノートブック。</div>
+      <div class="repo-meta">
+        <span class="lang">Jupyter Notebook</span>
+        <span class="stars-today">★ 860 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/supermemoryai/supermemory" target="_blank">supermemoryai/supermemory</a></div>
+      <div class="repo-desc">AI時代のための高速・スケーラブルなメモリエンジン。Memory APIとして機能するアプリも提供。</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 660 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/pbakaus/impeccable" target="_blank">pbakaus/impeccable</a></div>
+      <div class="repo-desc">AIハーネスのデザイン品質を向上させるためのデザイン言語ライブラリ。</div>
+      <div class="repo-meta">
+        <span class="lang">JavaScript</span>
+        <span class="stars-today">★ 612 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/revfactory/harness" target="_blank">revfactory/harness</a></div>
+      <div class="repo-desc">ドメイン特化型エージェントチームを設計し、専門化されたエージェントとそのスキルを自動生成するメタスキル。</div>
+      <div class="repo-meta">
+        <span class="lang">HTML</span>
+        <span class="stars-today">★ 527 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/EveryInc/compound-engineering-plugin" target="_blank">EveryInc/compound-engineering-plugin</a></div>
+      <div class="repo-desc">Claude Code・Codex・Cursor等向けの公式Compound Engineeringプラグイン。</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 428 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/Crosstalk-Solutions/project-nomad" target="_blank">Crosstalk-Solutions/project-nomad</a></div>
+      <div class="repo-desc">重要ツール・知識・AIを内蔵した自己完結型のオフラインサバイバルコンピュータ「Project N.O.M.A.D」。</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 423 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/run-llama/liteparse" target="_blank">run-llama/liteparse</a></div>
+      <div class="repo-desc">LlamaIndexチームによる高速でオープンソースなドキュメントパーサー（Rust実装）。</div>
+      <div class="repo-meta">
+        <span class="lang">Rust</span>
+        <span class="stars-today">★ 408 stars today</span>
+      </div>
+    </div>
+
+    <div class="trending-card">
+      <div class="repo-name"><a href="https://github.com/can1357/oh-my-pi" target="_blank">can1357/oh-my-pi</a></div>
+      <div class="repo-desc">ターミナル向けAIコーディングエージェント。ハッシュアンカーによる安全な編集・LSP・Python・ブラウザ・サブエージェント対応。</div>
+      <div class="repo-meta">
+        <span class="lang">TypeScript</span>
+        <span class="stars-today">★ 333 stars today</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-startups" class="tab-content">
+<p class="section-desc">r/startups · r/technology · TechCrunch</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">TechCrunch · 気候テック</span>
+    <h3><a href="https://techcrunch.com/2026/06/01/zigging-when-most-are-zagging-ex-meta-cto-raises-250m-climate-fund/" target="_blank">元Meta CTO、2億5000万ドルの気候ファンド「Gigascale Capital」を設立</a></h3>
+    <p class="summary">元Meta CTOのMike SchroepferがGigascale Capitalを通じて2億5000万ドルの気候ファンドを調達した。ほとんどのVCがAIに集中する中で意図的に逆張り戦略を取り、エネルギー・材料不足の解決策を構築する起業家への投資に注力する方針。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">TechCrunch · AI気象</span>
+    <h3><a href="https://techcrunch.com/2026/06/01/this-ai-weather-startup-is-out-forecasting-government-agencies/" target="_blank">このAI気象スタートアップ、政府機関の予報精度を数日分上回る</a></h3>
+    <p class="summary">Windborne Systemsの新しいAI気象予報モデルが、各国政府機関の予測を数日単位で上回る精度を達成した。予報精度の向上はサプライチェーン・農業・自然災害対策など幅広い分野に直接影響し、気象データ産業の転換点になり得る。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/06/01/spacex-says-it-may-issue-significant-equity-in-future-transactions/" target="_blank">SpaceX、IPO後に「重大な」株式希薄化の可能性を警告</a></h3>
+    <p class="summary">SpaceXが将来のIPO後に大規模な株式希薄化が起こり得ると投資家に警告。上場前に株式を取得した投資家への注意喚起として注目される発表。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://techcrunch.com/2026/06/01/anthropic-files-to-go-public/" target="_blank">Anthropic、IPO申請を正式完了 — 機密扱いのS-1をSECに提出</a></h3>
+    <p class="summary">AnthropicがSECへの機密IPO申請を正式に完了したことをTechCrunchが報道。AI業界最大規模のIPOとして、今後の上場プロセスに世界中から注目が集まる。</p>
+    <div class="card-meta">
+      <span class="source">TechCrunch</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="tab-movies" class="tab-content">
+<p class="section-desc">r/movies · r/TrueFilm · r/flicks · Roger Ebert · IndieWire</p>
+
+<div class="features">
+  <div class="card-feature">
+    <span class="badge">IndieWire · インタビュー</span>
+    <h3><a href="https://www.indiewire.com/features/interviews/spider-noir-oren-uziel-on-nicolas-cage-1235197093/" target="_blank">ブランジーノの朝食がニコラス・ケイジについて教えてくれたこと — 「Spider-Noir」クリエイター</a></h3>
+    <p class="summary">「Spider-Noir」ショーランナーのOren Uzielが、ニコラス・ケイジとの朝食の逸話を通じて彼の創造的な姿勢を語るインタビュー。ケイジの食事の注文と同様に、芸術的な選択も常に予想外だったと述べる。IndieWire Honors関連の特集記事。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+
+  <div class="card-feature">
+    <span class="badge">Roger Ebert · カンヌ2026</span>
+    <h3><a href="https://www.rogerebert.com/festivals/cannes-2026-video-11-the-samurai-and-the-prisoner-her-private-call-hope" target="_blank">カンヌ2026 Video #11: 「The Samurai and the Prisoner」「Her Private Call」「Hope」</a></h3>
+    <p class="summary">カンヌ映画祭2026の終盤から、特派員Isaac Feldbergが選ぶ3作品を紹介するビデオレポート。コンペティション後半の傑作を現地からいち早くレビューする貴重なコンテンツ。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+</div>
+
+<p class="grid-label">その他のトピック</p>
+<div class="cards-grid">
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/features/interviews/nicolas-cage-spider-noir-indiewire-honors-interview-1235196832/" target="_blank">ニコラス・ケイジ: 「Spider-Noir」でボガート映画への入口を作りたい</a></h3>
+    <p class="summary">IndieWire Honors Innovation Awardを受賞するニコラス・ケイジが、自身の多様な影響源をスーパーヒーロー役に融合させた経緯を語る。誰も演じられなかったキャラクターに挑んだ独自の解釈を詳述。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/the-unloved/the-unloved-part-150-laggies" target="_blank">The Unloved #150: 「Laggies」— Lynn Shelton監督への追悼</a></h3>
+    <p class="summary">2020年に急逝したLynn Shelton監督の2014年作品「Laggies」への愛情あふれる評論。ロジャー・エバートの長寿シリーズ「The Unloved」の第150回として、見過ごされた傑作への再評価を促す。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/streaming/star-city-for-all-mankind-spinoff-apple-tv-review-2026" target="_blank">「Star City」レビュー: 「For All Mankind」スピンオフの苦戦</a></h3>
+    <p class="summary">AppleTV+の「For All Mankind」スピンオフ「Star City」のレビュー。ソビエト宇宙開発を舞台にするが、暗く抑圧的な雰囲気が前面に出すぎて作品としての「離陸」に苦戦していると評される。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.rogerebert.com/dvd-blu-ray/home-entertainment-guide-may-2026-the-bride-wuthering-heights-sentimental-value-more" target="_blank">2026年5月ホームエンタメガイド: 「The Bride!」「Wuthering Heights」他</a></h3>
+    <p class="summary">Maggie GyllenhaalとEmerald Fenellの問題作、Criterion盤「Body Heat」「Lenny」「Peter Hujar's Day」など、5月の注目Blu-ray・ストリーミング新着をまとめてレビュー。</p>
+    <div class="card-meta">
+      <span class="source">Roger Ebert</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/news/trailers/macho-dancer-4k-trailer-gay-philippine-classic-restored-1235197413/" target="_blank">「Macho Dancer」4K無修正版 — フィリピンのクィア映画古典が7月10日に劇場復活</a></h3>
+    <p class="summary">かつて検閲を受けたフィリピン映画の傑作「Macho Dancer」が4Kノーカット版で復元され、7月10日より劇場公開予定。最も影響力の大きいクィア映画の一つとして再評価される機会となる。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><a href="https://www.indiewire.com/news/trailers/the-end-of-oak-street-trailer-dinosaurs-1235188773/" target="_blank">「The End of Oak Street」予告編公開 — 恐竜は始まりに過ぎない?</a></h3>
+    <p class="summary">David Robert Mitchell（「It Follows」監督）の新作大作スリラーの予告編が公開。郊外を舞台に恐竜が登場するが、それ以上に多くの謎を隠しているとみられ、ジャンルの枠を超えた期待作として注目される。</p>
+    <div class="card-meta">
+      <span class="source">IndieWire</span>
+    </div>
+  </div>
+</div>
+</div>
+
+</main>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
